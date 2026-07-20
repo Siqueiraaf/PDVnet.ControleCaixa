@@ -1,32 +1,54 @@
-﻿using PDVnet.ControleCaixa.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
 
 namespace PDVnet.ControleCaixa.Data.Repository;
 
 class MovimentacaoRepository : IMovimentacaoRepository
 {
-    public Task<MovimentacaoCaixa> AdicionarMovimentacao(MovimentacaoCaixa movimentacao)
+    private readonly PDVnetControleCaixaDbContext _context;
+
+    public MovimentacaoRepository(PDVnetControleCaixaDbContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<MovimentacaoCaixa> AtualizarMovimentacao(MovimentacaoCaixa movimentacao)
+    public async Task<MovimentacaoCaixa> AdicionarMovimentacao(MovimentacaoCaixa movimentacao)
     {
-        throw new NotImplementedException();
+        _context.MovimentacoesCaixa.Add(movimentacao);
+        await _context.SaveChangesAsync();
+        return movimentacao;
     }
 
-    public Task<MovimentacaoCaixa?> BuscarMovimentacaoPorId(int id)
+    public async Task<MovimentacaoCaixa> AtualizarMovimentacao(MovimentacaoCaixa movimentacao)
     {
-        throw new NotImplementedException();
+        _context.MovimentacoesCaixa.Update(movimentacao);
+        await _context.SaveChangesAsync();
+        return movimentacao;
+    }
+    public async Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacoes()
+    {
+        return await _context.MovimentacoesCaixa.ToListAsync();
     }
 
-    public Task<bool> ExcluirMovimentacao(int id)
+    public async Task<bool> ExcluirMovimentacao(int id)
     {
-        throw new NotImplementedException();
+        var movimentacao = await BuscarMovimentacaoPorId(id);
+
+        if (movimentacao == null)
+        {
+            return false;
+        }
+
+        _context.MovimentacoesCaixa.Remove(movimentacao);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
-    public Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacoes()
+    public async Task<MovimentacaoCaixa?> BuscarMovimentacaoPorId(int id)
     {
-        throw new NotImplementedException();
+        return await _context.MovimentacoesCaixa.FirstOrDefaultAsync(
+            movimentacaoCaixa => movimentacaoCaixa.Id == id);
     }
 }

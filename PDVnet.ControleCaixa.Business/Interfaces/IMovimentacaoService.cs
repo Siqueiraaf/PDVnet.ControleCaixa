@@ -6,6 +6,6 @@ public interface IMovimentacaoService
 {
     Task<MovimentacaoCaixa> CadastrarMovimentacao(MovimentacaoCaixa movimentacao);
     Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacao();
-    Task<MovimentacaoCaixa?> EditarMovimentacao(int id, MovimentacaoCaixa movimentacao);
+    Task<MovimentacaoCaixa?> EditarMovimentacao(MovimentacaoCaixa movimentacao);
     Task<bool> ExcluirMovimentacao(int id);
 }

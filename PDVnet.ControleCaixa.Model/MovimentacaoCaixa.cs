@@ -9,6 +9,6 @@ public class MovimentacaoCaixa
     public TipoMovimentacao Tipo { get; set; }
     public string Categoria { get; set; }
     public decimal Valor { get; set; }
-    public DateTime DataMovimento { get; set; }
+    public DateTime DataMovimento { get; set; } = DateTime.Now;
     public bool Status { get; set; }
 }

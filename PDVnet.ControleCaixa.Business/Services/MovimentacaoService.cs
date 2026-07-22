@@ -1,60 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PDVnet.ControleCaixa.Business.Interfaces;
-using PDVnet.ControleCaixa.Data;
+﻿using PDVnet.ControleCaixa.Business.Interfaces;
+using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
 
 namespace PDVnet.ControleCaixa.Business.Services;
 
 public class MovimentacaoService : IMovimentacaoService
 {
-    private readonly PDVnetControleCaixaDbContext _context;
+    private readonly IMovimentacaoRepository _repository;
 
-    public MovimentacaoService(PDVnetControleCaixaDbContext context)
+    public MovimentacaoService(IMovimentacaoRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task<MovimentacaoCaixa> CadastrarMovimentacao(MovimentacaoCaixa movimentacao)
     {
-        movimentacao.Status = true;
-
-        _context.MovimentacoesCaixa.Add(movimentacao);
-        _context.SaveChanges();
-
-        return movimentacao;
-    }
-
-    public async Task<MovimentacaoCaixa?> EditarMovimentacao(int id, MovimentacaoCaixa movimentacao)
-    {
-        var editarMovimentacao = await _context.MovimentacoesCaixa.FindAsync(id);
-
-        if (editarMovimentacao == null) return null;
-
-        editarMovimentacao.Descricao = movimentacao.Descricao;
-        editarMovimentacao.Tipo = movimentacao.Tipo;
-        editarMovimentacao.Categoria = movimentacao.Categoria;
-        editarMovimentacao.Valor = movimentacao.Valor;
-        editarMovimentacao.DataMovimento = movimentacao.DataMovimento;
-        editarMovimentacao.Status = movimentacao.Status;
-
-        await _context.SaveChangesAsync();
-        return editarMovimentacao;
+        return await _repository.AdicionarMovimentacao(movimentacao);
     }
 
     public async Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacao()
     {
-        return await _context.MovimentacoesCaixa.ToListAsync();
+        return await _repository.ListarTodasMovimentacoes();
     }
 
     public async Task<bool> ExcluirMovimentacao(int id)
     {
-        var excluirMovimentacao = await _context.MovimentacoesCaixa.FindAsync(id);
+        return await _repository.ExcluirMovimentacao(id);
+    }
 
-        if (excluirMovimentacao == null) return false;
-
-        _context.MovimentacoesCaixa.Remove(excluirMovimentacao);
-        await _context.SaveChangesAsync();
-
-        return true;
+    public async Task<MovimentacaoCaixa?> EditarMovimentacao(MovimentacaoCaixa movimentacao)
+    {
+        return await _repository.AtualizarMovimentacao(movimentacao);
     }
 }

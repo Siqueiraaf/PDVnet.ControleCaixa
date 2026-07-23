@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using PDVnet.ControleCaixa.Business.Exceptions;
 using PDVnet.ControleCaixa.Business.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.Enums;
@@ -21,20 +22,29 @@ public partial class MovimentacaoCreateViewModel : MovimentacaoBaseViewModel
     [RelayCommand]
     private async Task CadastrarMovimentacao()
     {
-        MovimentacaoCriada = new MovimentacaoCaixa
+        try 
         {
-            Descricao = Descricao,
-            Categoria = Categoria,
-            Valor = Valor,
-            Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
-            Status = Status
-        };
+            MovimentacaoCriada = new MovimentacaoCaixa
+            {
+                Descricao = Descricao,
+                Categoria = Categoria,
+                Valor = Valor,
+                Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
+                Status = Status,
+                DataMovimento = DateTime.Now
+            };
 
-        await _service.CadastrarMovimentacao(MovimentacaoCriada);
+            await _service.CadastrarMovimentacao(MovimentacaoCriada);
 
-        MessageBox.Show($"{Tipo} cadastrado com sucesso.");
+            MessageBox.Show($"{Tipo} cadastrado com sucesso.");
 
-        SolicitarFechamento();
+            SolicitarFechamento();
+        }
+
+        catch (BusinessException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 
     [RelayCommand]

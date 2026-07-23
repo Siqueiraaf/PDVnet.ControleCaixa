@@ -6,9 +6,7 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI"
         xmlns:vm="clr-namespace:PDVnet.ControleCaixa.UI.ViewModels"
         xmlns:view="clr-namespace:PDVnet.ControleCaixa.UI.Views.Movimentacao"
-        Icon="/Assets/cx.ico"
         mc:Ignorable="d"
-        
         WindowStartupLocation="CenterScreen"
         Title="Controle de Caixa" Height="800" Width="1200">
         
@@ -29,14 +27,15 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Cards -->
-                <Grid>
+                <Grid Grid.Row="0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -62,7 +61,6 @@
                                        HorizontalAlignment="Center"/>
 
                         </StackPanel>
-
                     </Border>
 
                     <Border Grid.Column="1"
@@ -84,7 +82,6 @@
                                        HorizontalAlignment="Center"/>
 
                         </StackPanel>
-
                     </Border>
 
                 </Grid>
@@ -97,12 +94,84 @@
                            Visibility="{Binding Lista.SaldoBaixo,
                                 Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-                <!-- Lista -->
-                <view:MovimentacaoList Grid.Row="2"
-                       DataContext="{Binding Lista}"/>
-                
-                <!-- Botões -->
-                <StackPanel Grid.Row="4"
+                <Grid Grid.Row="2"
+      Margin="0,10,0,10"
+      HorizontalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Text="FILTROS:"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Margin="0,0,15,0"/>
+
+                    <StackPanel Grid.Column="1"
+                                Margin="5">
+
+                        <TextBlock Text="Categoria"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"/>
+
+                        <ComboBox Width="150"
+                                  Margin="0,5,0,0"
+                                  ItemsSource="{Binding Lista.Categorias}"
+                                  SelectedItem="{Binding Lista.CategoriaSelecionada}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2"
+                                Margin="5">
+
+                        <TextBlock Text="Tipo"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+
+                        <ComboBox Width="150"
+                                  Margin="0,5,0,0"
+                                  ItemsSource="{Binding Lista.TiposFiltro}"
+                                  SelectedItem="{Binding Lista.TipoSelecionado}"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3"
+                                Margin="5">
+
+                        <TextBlock Text="Período"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+
+                        <ComboBox Width="150"
+                                  Margin="0,5,0,0"
+                                  ItemsSource="{Binding Lista.PeriodosFiltro}"
+                                  SelectedItem="{Binding Lista.PeriodoSelecionado}"/>
+
+                    </StackPanel>
+
+                    <Button Grid.Column="4"
+                            Width="90"
+                            Height="30"
+                            Margin="10,15,5,0"
+                            Content="Filtrar"
+                            Command="{Binding Lista.FiltrarMovimentacoesCommand}"/>
+
+                    <Button Grid.Column="5"
+                            Width="90"
+                            Height="30"
+                            Margin="5,15,0,0"
+                            Content="Limpar filtros"
+                            Command="{Binding Lista.LimparFiltrosCommand}"/>
+                </Grid>
+
+                <view:MovimentacaoList Grid.Row="4" DataContext="{Binding Lista}"/>
+
+                <StackPanel Grid.Row="6"
                             Orientation="Horizontal">
 
                     <Button Width="120"
@@ -125,9 +194,7 @@
                 </StackPanel>
 
             </Grid>
-
         </Border>
-
     </Grid>
 
 </Window>

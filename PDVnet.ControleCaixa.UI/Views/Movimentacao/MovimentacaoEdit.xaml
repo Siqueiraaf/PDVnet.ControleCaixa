@@ -68,7 +68,8 @@
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto"
                              Text="{Binding Descricao,
-                                    UpdateSourceTrigger=PropertyChanged}"/>
+                                    UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="200"/>
 
                 </StackPanel>
 
@@ -121,6 +122,7 @@
                          Width="150"
                          HorizontalAlignment="Left"
                          Margin="-20,0,0,0"
+                         PreviewTextInput="NumberValidationTextBox"
                          Text="{Binding Valor,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 

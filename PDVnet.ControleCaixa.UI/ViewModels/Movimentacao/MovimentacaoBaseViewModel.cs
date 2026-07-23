@@ -1,4 +1,6 @@
-﻿namespace PDVnet.ControleCaixa.UI.ViewModels.Movimentacao;
+﻿using PDVnet.ControleCaixa.UI.Helpers;
+
+namespace PDVnet.ControleCaixa.UI.ViewModels.Movimentacao;
 
 public class MovimentacaoBaseViewModel : BaseViewModel
 {
@@ -28,16 +30,7 @@ public class MovimentacaoBaseViewModel : BaseViewModel
         }
     }
 
-    public List<string> Categorias { get; } =
-    [
-        "Vendas",
-        "Despesas Fixas",
-        "Fornecedores",
-        "Impostos",
-        "Faturamento",
-        "Tecnologia",
-        "Outros"
-    ];
+    public List<string> Categorias => MovimentacaoOptions.Categorias;
 
     private decimal _valor;
     public decimal Valor
@@ -83,11 +76,7 @@ public class MovimentacaoBaseViewModel : BaseViewModel
         }
     }
 
-    public List<string> Tipos { get; } =
-    [
-        "Entrada",
-        "Saida"
-    ];
+    public List<string> Tipos => MovimentacaoOptions.Tipos;
 
     private bool _status = true;
     public bool Status

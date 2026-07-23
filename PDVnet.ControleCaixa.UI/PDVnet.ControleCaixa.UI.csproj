@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\cx.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\cx.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
@@ -19,6 +24,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PDVnet.ControleCaixa.Business\PDVnet.ControleCaixa.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\cx.ico" />
   </ItemGroup>
 
 </Project>

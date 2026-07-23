@@ -63,11 +63,12 @@
                            Margin="0,0,0,5"/>
 
                     <TextBox Height="80"
-                         TextWrapping="Wrap"
-                         AcceptsReturn="True"
-                         VerticalScrollBarVisibility="Auto"
-                         Text="{Binding Descricao,
-                         UpdateSourceTrigger=PropertyChanged}"/>
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Text="{Binding Descricao,
+                             UpdateSourceTrigger=PropertyChanged}"
+                             MaxLength="200"/>
 
                 </StackPanel>
 
@@ -115,26 +116,21 @@
 
                 </StackPanel>
 
-
-
                 <!-- Valor -->
-
                 <TextBlock Grid.Row="6"
                        Grid.Column="0"
                        Text="Valor:"
                        FontWeight="Bold"
                        VerticalAlignment="Center"/>
 
-
                 <TextBox Grid.Row="6"
-                     Grid.Column="1"
-                     Width="150"
-                     HorizontalAlignment="Left"
-                     Margin="-20,0,0,0"
-                     Text="{Binding Valor,
-                     UpdateSourceTrigger=PropertyChanged}"/>
-
-
+                         Grid.Column="1"
+                         Width="150"
+                         HorizontalAlignment="Left"
+                         Margin="-20,0,0,0"
+                         PreviewTextInput="NumberValidationTextBox"
+                         Text="{Binding Valor,
+                            UpdateSourceTrigger=PropertyChanged}"/>
 
                 <!-- Status -->
                 <TextBlock Grid.Row="8"

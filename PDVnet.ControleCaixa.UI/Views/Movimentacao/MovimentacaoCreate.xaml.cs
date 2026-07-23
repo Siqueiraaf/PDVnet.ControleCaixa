@@ -1,5 +1,8 @@
-﻿using PDVnet.ControleCaixa.UI.ViewModels;
+﻿using PDVnet.ControleCaixa.UI.Helpers;
+using PDVnet.ControleCaixa.UI.ViewModels;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PDVnet.ControleCaixa.UI.Views
 {
@@ -18,6 +21,11 @@ namespace PDVnet.ControleCaixa.UI.Views
             {
                 DialogResult = resultado;
             };
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            TextBoxHelper.SomenteNumeros(sender, e);
         }
     }
 }

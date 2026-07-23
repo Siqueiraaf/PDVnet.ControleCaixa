@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI"
         xmlns:vm="clr-namespace:PDVnet.ControleCaixa.UI.ViewModels"
         xmlns:view="clr-namespace:PDVnet.ControleCaixa.UI.Views.Movimentacao"
+        Icon="/Assets/cx.ico"
         mc:Ignorable="d"
+        
         WindowStartupLocation="CenterScreen"
         Title="Controle de Caixa" Height="800" Width="1200">
+        
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
 
     <Grid Margin="20">
 
@@ -49,7 +56,7 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"/>
 
-                            <TextBlock Text="{Binding SaldoTotal, StringFormat=R$ {0:N2}}"
+                            <TextBlock Text="{Binding Lista.SaldoTotal, StringFormat=R$ {0:N2}}"
                                        FontSize="20"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"/>
@@ -71,7 +78,7 @@
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"/>
 
-                            <TextBlock Text="{Binding TotalMovimentacoes}"
+                            <TextBlock Text="{Binding Lista.TotalMovimentacoes}"
                                        FontSize="20"
                                        FontWeight="Bold"
                                        HorizontalAlignment="Center"/>
@@ -81,6 +88,14 @@
                     </Border>
 
                 </Grid>
+
+                <TextBlock Grid.Row="1"
+                           Text="⚠ Atenção: Saldo do caixa abaixo do mínimo permitido (R$ 100,00)."
+                           Foreground="Red"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           Visibility="{Binding Lista.SaldoBaixo,
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <!-- Lista -->
                 <view:MovimentacaoList Grid.Row="2"

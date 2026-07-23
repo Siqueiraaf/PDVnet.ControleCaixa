@@ -21,4 +21,12 @@
     <ProjectReference Include="..\PDVnet.ControleCaixa.Business\PDVnet.ControleCaixa.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Assets\cx.ico" />
+  </ItemGroup>
+
+	<PropertyGroup>
+		<ApplicationIcon>Assets\cx.ico</ApplicationIcon>
+	</PropertyGroup>
+
 </Project>

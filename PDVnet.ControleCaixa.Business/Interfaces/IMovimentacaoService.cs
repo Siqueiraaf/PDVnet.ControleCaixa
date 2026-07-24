@@ -9,7 +9,5 @@ public interface IMovimentacaoService
     Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacao();
     Task<MovimentacaoCaixa?> EditarMovimentacao(MovimentacaoCaixa movimentacao);
     Task<bool> ExcluirMovimentacao(int id);
-    Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesCategoria(string? categoria);
-    Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesTipo(TipoMovimentacao tipo);
-    Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesPeriodo(string periodo);
+    Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo);
 }

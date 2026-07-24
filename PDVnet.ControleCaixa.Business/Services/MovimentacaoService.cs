@@ -37,18 +37,8 @@ public class MovimentacaoService : IMovimentacaoService
         return await _repository.AtualizarMovimentacao(movimentacao);
     }
 
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesCategoria(string? categoria)
+    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
     {
-        return await _repository.FiltrarMovimentacoesCategoria(categoria);
-    }
-
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesTipo(TipoMovimentacao tipo)
-    {
-        return await _repository.FiltrarMovimentacoesTipo(tipo);
-    }
-
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesPeriodo(string periodo)
-    {
-        return await _repository.FiltrarMovimentacoesPeriodo(periodo);
+        return await _repository.FiltrarMovimentacoes(categoria, tipo, periodo);
     }
 }

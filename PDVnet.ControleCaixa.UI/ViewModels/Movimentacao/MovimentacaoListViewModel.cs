@@ -35,11 +35,11 @@ public partial class MovimentacaoListViewModel : ObservableObject
     [ObservableProperty]
     private bool saldoBaixo;
 
-    public List<string> Categorias => MovimentacaoOptions.Categorias;
+    public List<string> Categorias => MovimentacaoOptionsHelper.CategoriasFiltro;
 
-    public List<string> PeriodosFiltro => MovimentacaoOptions.PeriodosFiltro;
+    public List<string> PeriodosFiltro => MovimentacaoOptionsHelper.PeriodosFiltro;
 
-    public List<string> TiposFiltro => MovimentacaoOptions.TiposFiltro;
+    public List<string> TiposFiltro => MovimentacaoOptionsHelper.TiposFiltro;
 
     public MovimentacaoListViewModel(IMovimentacaoService service)
     {
@@ -68,12 +68,12 @@ public partial class MovimentacaoListViewModel : ObservableObject
         TotalMovimentacoes = Movimentacoes.Count;
 
         var totalEntradas = Movimentacoes
-            .Where(m => m.Tipo == TipoMovimentacao.Entrada)
-            .Sum(m => m.Valor);
+            .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Entrada)
+            .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 
         var totalSaidas = Movimentacoes
-            .Where(m => m.Tipo == TipoMovimentacao.Saida)
-            .Sum(m => m.Valor);
+            .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Saida)
+            .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 
         SaldoTotal = totalEntradas - totalSaidas;
 
@@ -85,8 +85,7 @@ public partial class MovimentacaoListViewModel : ObservableObject
     {
         Movimentacoes.Clear();
 
-        var resultado = await _service.FiltrarMovimentacoesCategoria(
-            CategoriaSelecionada);
+        var resultado = await _service.FiltrarMovimentacoesCategoria(CategoriaSelecionada);
 
         foreach (var movimentacao in resultado)
         {
@@ -99,8 +98,7 @@ public partial class MovimentacaoListViewModel : ObservableObject
     {
         Movimentacoes.Clear();
 
-        if (string.IsNullOrEmpty(TipoSelecionado) ||
-            TipoSelecionado == "Todos")
+        if (string.IsNullOrEmpty(TipoSelecionado) || TipoSelecionado == "Todos")
         {
             await CarregarMovimentacoesAsync();
             return;
@@ -121,8 +119,7 @@ public partial class MovimentacaoListViewModel : ObservableObject
     {
         Movimentacoes.Clear();
 
-        var resultado = await _service.FiltrarMovimentacoesPeriodo(
-            PeriodoSelecionado);
+        var resultado = await _service.FiltrarMovimentacoesPeriodo(PeriodoSelecionado);
 
         foreach (var movimentacao in resultado)
         {
@@ -145,20 +142,16 @@ public partial class MovimentacaoListViewModel : ObservableObject
     {
         IEnumerable<MovimentacaoCaixa> resultado;
 
-        if (!string.IsNullOrEmpty(CategoriaSelecionada) &&
-            CategoriaSelecionada != "Todos")
+        if (!string.IsNullOrEmpty(CategoriaSelecionada) && CategoriaSelecionada != "Todos")
         {
             resultado = await _service.FiltrarMovimentacoesCategoria(CategoriaSelecionada);
         }
-        else if (!string.IsNullOrEmpty(TipoSelecionado) &&
-                 TipoSelecionado != "Todos")
+        else if (!string.IsNullOrEmpty(TipoSelecionado) && TipoSelecionado != "Todos")
         {
             var tipo = Enum.Parse<TipoMovimentacao>(TipoSelecionado);
-
             resultado = await _service.FiltrarMovimentacoesTipo(tipo);
         }
-        else if (!string.IsNullOrEmpty(PeriodoSelecionado) &&
-                 PeriodoSelecionado != "Todos")
+        else if (!string.IsNullOrEmpty(PeriodoSelecionado) && PeriodoSelecionado != "Todos")
         {
             resultado = await _service.FiltrarMovimentacoesPeriodo(PeriodoSelecionado);
         }
@@ -166,7 +159,6 @@ public partial class MovimentacaoListViewModel : ObservableObject
         {
             resultado = await _service.ListarTodasMovimentacao();
         }
-
 
         Movimentacoes.Clear();
 

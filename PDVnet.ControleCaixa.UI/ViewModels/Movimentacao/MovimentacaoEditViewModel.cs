@@ -19,9 +19,7 @@ public partial class MovimentacaoEditViewModel : MovimentacaoBaseViewModel
         _service = service;
     }
 
-    public MovimentacaoEditViewModel(
-        IMovimentacaoService service,
-        MovimentacaoCaixa movimentacao)
+    public MovimentacaoEditViewModel(IMovimentacaoService service, MovimentacaoCaixa movimentacao)
     {
         _service = service;
 
@@ -46,9 +44,7 @@ public partial class MovimentacaoEditViewModel : MovimentacaoBaseViewModel
                 Descricao = Descricao,
                 Categoria = Categoria,
                 Valor = Valor,
-                Tipo = IsEntrada
-               ? TipoMovimentacao.Entrada
-               : TipoMovimentacao.Saida,
+                Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
                 Status = Status
             };
 

@@ -19,10 +19,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-        <!-- Título -->
         <StackPanel>
-
             <TextBlock Text="🗑 Excluir Movimentação"
                        FontSize="24"
                        FontWeight="Bold"/>
@@ -37,8 +34,6 @@
 
         </StackPanel>
 
-
-        <!-- Dados da movimentação -->
         <Border Grid.Row="2"
                 BorderBrush="Gray"
                 BorderThickness="1"
@@ -46,7 +41,6 @@
                 Padding="20">
 
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="15"/>
@@ -57,14 +51,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-
-                <!-- Descrição -->
                 <TextBlock Grid.Row="0"
                            Grid.Column="0"
                            Text="Descrição:"
@@ -75,8 +66,6 @@
                            Text="{Binding Descricao}"
                            TextWrapping="Wrap"/>
 
-
-                <!-- Categoria -->
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
                            Text="Categoria:"
@@ -86,8 +75,6 @@
                            Grid.Column="1"
                            Text="{Binding Categoria}"/>
 
-
-                <!-- Tipo -->
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"
                            Text="Tipo:"
@@ -97,8 +84,6 @@
                            Grid.Column="1"
                            Text="{Binding Tipo}"/>
 
-
-                <!-- Valor -->
                 <TextBlock Grid.Row="6"
                            Grid.Column="0"
                            Text="Valor:"
@@ -107,13 +92,9 @@
                 <TextBlock Grid.Row="6"
                            Grid.Column="1"
                            Text="{Binding Valor, StringFormat={}{0:C}}"/>
-
             </Grid>
-
         </Border>
 
-
-        <!-- Botões -->
         <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
@@ -124,15 +105,12 @@
                     Content="Cancelar"
                     Command="{Binding CancelarCommand}"/>
 
-
             <Button Width="110"
                     Height="25"
                     Content="Excluir"
                     Command="{Binding ExcluirCommand}"/>
 
         </StackPanel>
-
-
     </Grid>
 
 </Window>

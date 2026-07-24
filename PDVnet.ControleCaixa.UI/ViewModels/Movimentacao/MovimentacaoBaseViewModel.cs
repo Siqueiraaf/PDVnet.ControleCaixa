@@ -30,7 +30,7 @@ public class MovimentacaoBaseViewModel : BaseViewModel
         }
     }
 
-    public List<string> Categorias => MovimentacaoOptions.Categorias;
+    public List<string> Categorias => MovimentacaoOptionsHelper.Categorias;
 
     private decimal _valor;
     public decimal Valor
@@ -76,7 +76,7 @@ public class MovimentacaoBaseViewModel : BaseViewModel
         }
     }
 
-    public List<string> Tipos => MovimentacaoOptions.Tipos;
+    public List<string> Tipos => MovimentacaoOptionsHelper.Tipos;
 
     private bool _status = true;
     public bool Status

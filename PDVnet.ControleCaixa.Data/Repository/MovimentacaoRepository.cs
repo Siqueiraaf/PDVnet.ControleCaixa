@@ -97,11 +97,9 @@ public class MovimentacaoRepository : IMovimentacaoRepository
                 break;
 
             case "mensal":
-
                 query = query.Where(movimentoCaixa =>
                     movimentoCaixa.DataMovimento.Month == hoje.Month &&
                     movimentoCaixa.DataMovimento.Year == hoje.Year);
-
                 break;
 
             case "semestral":

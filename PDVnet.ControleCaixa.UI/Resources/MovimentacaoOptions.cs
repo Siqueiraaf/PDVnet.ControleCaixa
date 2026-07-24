@@ -1,6 +1,6 @@
-﻿namespace PDVnet.ControleCaixa.UI.Helpers;
+﻿namespace PDVnet.ControleCaixa.UI.Resources;
 
-public static class MovimentacaoOptionsHelper
+public static class MovimentacaoOptions
 {
     public static List<string> Categorias { get; } =
     [

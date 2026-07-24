@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace PDVnet.ControleCaixa.UI.Helpers;
+namespace PDVnet.ControleCaixa.UI.Converters;
 
-public class StatusConverterHelper : IValueConverter
+public class StatusConverter : IValueConverter
 {
     public object Convert(
         object value,

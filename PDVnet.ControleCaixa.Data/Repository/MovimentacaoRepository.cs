@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PDVnet.ControleCaixa.Data.Contexts;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.Enums;

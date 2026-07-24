@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using PDVnet.ControleCaixa.Business.Interfaces;
 using PDVnet.ControleCaixa.Business.Services;
 using PDVnet.ControleCaixa.Data.Repository;
-using PDVnet.ControleCaixa.Data;
-using PDVnet.ControleCaixa.Data.Database;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.UI.Interfaces;
 using PDVnet.ControleCaixa.UI.Services;
@@ -13,6 +11,8 @@ using PDVnet.ControleCaixa.UI.Views;
 using PDVnet.ControleCaixa.UI.Views.Movimentacao;
 using System.Configuration;
 using System.Windows;
+using PDVnet.ControleCaixa.Data.Contexts;
+using PDVnet.ControleCaixa.Data;
 
 namespace PDVnet.ControleCaixa.UI;
 
@@ -39,7 +39,7 @@ public partial class App : Application
 
         services.AddDbContext<PDVnetControleCaixaDbContext>(options =>
         {
-            options.UseSqlServer(DatabaseConnection.ConnectionString);
+            options.UseSqlServer(ConnectionHelper.ConnectionString);
         });
 
         // Repository

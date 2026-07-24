@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PDVnet.ControleCaixa.Model;
 
-namespace PDVnet.ControleCaixa.Data;
+namespace PDVnet.ControleCaixa.Data.Contexts;
 
 public class PDVnetControleCaixaDbContext : DbContext
 {

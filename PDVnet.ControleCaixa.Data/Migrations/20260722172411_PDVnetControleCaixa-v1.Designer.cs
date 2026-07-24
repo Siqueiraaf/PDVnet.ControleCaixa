@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PDVnet.ControleCaixa.Data.Contexts;
+using PDVnet.ControleCaixa.Data.Context;
 
 #nullable disable
 

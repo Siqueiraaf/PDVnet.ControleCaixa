@@ -1,4 +1,4 @@
-﻿using PDVnet.ControleCaixa.UI.Helpers;
+﻿using PDVnet.ControleCaixa.UI.Behaviors;
 using PDVnet.ControleCaixa.UI.ViewModels;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -25,7 +25,7 @@ namespace PDVnet.ControleCaixa.UI.Views
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            TextBoxHelper.SomenteNumeros(sender, e);
+            NumericTextBoxHelper.SomenteNumeros(sender, e);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using System.Configuration;
 
-namespace PDVnet.ControleCaixa.Data.Contexts;
+namespace PDVnet.ControleCaixa.Data.Context;
 
 public class PDVnetControleCaixaDbContextFactory
     : IDesignTimeDbContextFactory<PDVnetControleCaixaDbContext>

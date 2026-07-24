@@ -2,9 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace PDVnet.ControleCaixa.UI.Helpers;
+namespace PDVnet.ControleCaixa.UI.Behaviors;
 
-public static class TextBoxHelper
+public static class NumericTextBoxHelper
 {
     private static readonly Regex Regex = new(@"^\d*([,.]?\d{0,2})?$");
 

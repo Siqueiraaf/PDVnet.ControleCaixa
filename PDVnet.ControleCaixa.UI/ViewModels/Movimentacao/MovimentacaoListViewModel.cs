@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using PDVnet.ControleCaixa.Business.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.Enums;
-using PDVnet.ControleCaixa.UI.Helpers;
+using PDVnet.ControleCaixa.UI.Resources;
 using System.Collections.ObjectModel;
 
 namespace PDVnet.ControleCaixa.UI.ViewModels;
@@ -35,11 +35,11 @@ public partial class MovimentacaoListViewModel : ObservableObject
     [ObservableProperty]
     private bool saldoBaixo;
 
-    public List<string> Categorias => MovimentacaoOptionsHelper.CategoriasFiltro;
+    public List<string> Categorias => MovimentacaoOptions.CategoriasFiltro;
 
-    public List<string> PeriodosFiltro => MovimentacaoOptionsHelper.PeriodosFiltro;
+    public List<string> PeriodosFiltro => MovimentacaoOptions.PeriodosFiltro;
 
-    public List<string> TiposFiltro => MovimentacaoOptionsHelper.TiposFiltro;
+    public List<string> TiposFiltro => MovimentacaoOptions.TiposFiltro;
 
     public MovimentacaoListViewModel(IMovimentacaoService service)
     {

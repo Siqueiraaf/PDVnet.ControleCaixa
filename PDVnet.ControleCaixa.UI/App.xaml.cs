@@ -9,9 +9,8 @@ using PDVnet.ControleCaixa.UI.Services;
 using PDVnet.ControleCaixa.UI.ViewModels;
 using PDVnet.ControleCaixa.UI.Views;
 using PDVnet.ControleCaixa.UI.Views.Movimentacao;
-using System.Configuration;
 using System.Windows;
-using PDVnet.ControleCaixa.Data.Contexts;
+using PDVnet.ControleCaixa.Data.Context;
 using PDVnet.ControleCaixa.Data;
 
 namespace PDVnet.ControleCaixa.UI;

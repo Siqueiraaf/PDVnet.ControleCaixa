@@ -18,13 +18,13 @@ public partial class MovimentacaoListViewModel : ObservableObject
     private MovimentacaoCaixa? movimentacaoSelecionada;
 
     [ObservableProperty]
-    private string? categoriaSelecionada;
+    private string categoriaSelecionada = "Todos";
 
     [ObservableProperty]
-    private string? tipoSelecionado;
+    private string tipoSelecionado = "Todos";
 
     [ObservableProperty]
-    private string? periodoSelecionado;
+    private string periodoSelecionado = "Todos";
 
     [ObservableProperty]
     private int totalMovimentacoes;
@@ -47,22 +47,6 @@ public partial class MovimentacaoListViewModel : ObservableObject
     }
 
     private const decimal SaldoMinimo = 100m;
-
-    [RelayCommand]
-    public async Task CarregarMovimentacoesAsync()
-    {
-        Movimentacoes.Clear();
-
-        var movimentacoes = await _service.ListarTodasMovimentacao();
-
-        foreach (var movimentacao in movimentacoes)
-        {
-            Movimentacoes.Add(movimentacao);
-        }
-
-        AtualizarResumo();
-    }
-
     private void AtualizarResumo()
     {
         TotalMovimentacoes = Movimentacoes.Count;
@@ -80,51 +64,24 @@ public partial class MovimentacaoListViewModel : ObservableObject
         SaldoBaixo = SaldoTotal < SaldoMinimo;
     }
 
-    [RelayCommand]
-    public async Task FiltrarPorCategoriaAsync()
+    private void AtualizarLista(IEnumerable<MovimentacaoCaixa> movimentacoes)
     {
         Movimentacoes.Clear();
 
-        var resultado = await _service.FiltrarMovimentacoesCategoria(CategoriaSelecionada);
-
-        foreach (var movimentacao in resultado)
+        foreach (var movimentacao in movimentacoes)
         {
             Movimentacoes.Add(movimentacao);
         }
+
+        AtualizarResumo();
     }
 
     [RelayCommand]
-    public async Task FiltrarPorTipoAsync()
+    public async Task CarregarMovimentacoesAsync()
     {
-        Movimentacoes.Clear();
+        var movimentacoes = await _service.ListarTodasMovimentacao();
 
-        if (string.IsNullOrEmpty(TipoSelecionado) || TipoSelecionado == "Todos")
-        {
-            await CarregarMovimentacoesAsync();
-            return;
-        }
-
-        var tipo = Enum.Parse<TipoMovimentacao>(TipoSelecionado);
-
-        var resultado = await _service.FiltrarMovimentacoesTipo(tipo);
-
-        foreach (var movimentacao in resultado)
-        {
-            Movimentacoes.Add(movimentacao);
-        }
-    }
-
-    [RelayCommand]
-    public async Task FiltrarPorPeriodoAsync()
-    {
-        Movimentacoes.Clear();
-
-        var resultado = await _service.FiltrarMovimentacoesPeriodo(PeriodoSelecionado);
-
-        foreach (var movimentacao in resultado)
-        {
-            Movimentacoes.Add(movimentacao);
-        }
+        AtualizarLista(movimentacoes);
     }
 
     [RelayCommand]
@@ -140,31 +97,11 @@ public partial class MovimentacaoListViewModel : ObservableObject
     [RelayCommand]
     public async Task FiltrarMovimentacoesAsync()
     {
-        IEnumerable<MovimentacaoCaixa> resultado;
+        var resultado = await _service.FiltrarMovimentacoes(
+            CategoriaSelecionada,
+            TipoSelecionado,
+            PeriodoSelecionado);
 
-        if (!string.IsNullOrEmpty(CategoriaSelecionada) && CategoriaSelecionada != "Todos")
-        {
-            resultado = await _service.FiltrarMovimentacoesCategoria(CategoriaSelecionada);
-        }
-        else if (!string.IsNullOrEmpty(TipoSelecionado) && TipoSelecionado != "Todos")
-        {
-            var tipo = Enum.Parse<TipoMovimentacao>(TipoSelecionado);
-            resultado = await _service.FiltrarMovimentacoesTipo(tipo);
-        }
-        else if (!string.IsNullOrEmpty(PeriodoSelecionado) && PeriodoSelecionado != "Todos")
-        {
-            resultado = await _service.FiltrarMovimentacoesPeriodo(PeriodoSelecionado);
-        }
-        else
-        {
-            resultado = await _service.ListarTodasMovimentacao();
-        }
-
-        Movimentacoes.Clear();
-
-        foreach (var movimentacao in resultado)
-        {
-            Movimentacoes.Add(movimentacao);
-        }
+        AtualizarLista(resultado);
     }
 }

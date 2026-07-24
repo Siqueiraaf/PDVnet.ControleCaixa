@@ -67,34 +67,44 @@ public class MovimentacaoRepository : IMovimentacaoRepository
             movimentacaoCaixa => movimentacaoCaixa.Id == id);
     }
 
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesCategoria(string? categoria)
+    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
     {
-        return await _context.MovimentacoesCaixa
-            .Where(movimentacaoCaixa => movimentacaoCaixa.Categoria == categoria)
-            .ToListAsync();
+        var query = _context.MovimentacoesCaixa.AsQueryable();
+
+        if (!string.IsNullOrEmpty(categoria) && categoria != "Todos")
+        {
+            query = query.Where(movimentoCaixa => movimentoCaixa.Categoria == categoria);
+        }
+
+        if (!string.IsNullOrEmpty(tipo) && tipo != "Todos")
+        {
+            var tipoEnum = Enum.Parse<TipoMovimentacao>(tipo);
+
+            query = query.Where(movimentoCaixa => movimentoCaixa.Tipo == tipoEnum);
+        }
+
+        if (!string.IsNullOrEmpty(periodo) && periodo != "Todos")
+        {
+            query = AplicarFiltroPeriodo(query, periodo);
+        }
+
+        return await query.ToListAsync();
     }
 
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesTipo(TipoMovimentacao tipo)
-    {
-        return await _context.MovimentacoesCaixa
-            .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == tipo)
-            .ToListAsync();
-    }
-
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesPeriodo(string periodo)
+    private static IQueryable<MovimentacaoCaixa> AplicarFiltroPeriodo(IQueryable<MovimentacaoCaixa> query, string periodo)
     {
         var hoje = DateTime.Now;
-
-        IQueryable<MovimentacaoCaixa> query = _context.MovimentacoesCaixa;
 
         switch (periodo.ToLower())
         {
             case "diario":
-                query = query.Where(movimentoCaixa => movimentoCaixa.DataMovimento.Date == hoje.Date);
+                query = query.Where(movimentoCaixa =>
+                    movimentoCaixa.DataMovimento.Date == hoje.Date);
                 break;
 
             case "semanal":
-                query = query.Where(movimentoCaixa => movimentoCaixa.DataMovimento >= hoje.AddDays(-7));
+                query = query.Where(movimentoCaixa =>
+                    movimentoCaixa.DataMovimento >= hoje.AddDays(-7));
                 break;
 
             case "mensal":
@@ -104,14 +114,16 @@ public class MovimentacaoRepository : IMovimentacaoRepository
                 break;
 
             case "semestral":
-                query = query.Where(movimentoCaixa => movimentoCaixa.DataMovimento >= hoje.AddMonths(-6));
+                query = query.Where(movimentoCaixa =>
+                    movimentoCaixa.DataMovimento >= hoje.AddMonths(-6));
                 break;
 
             case "anual":
-                query = query.Where(movimentoCaixa => movimentoCaixa.DataMovimento.Year == hoje.Year);
+                query = query.Where(movimentoCaixa =>
+                    movimentoCaixa.DataMovimento.Year == hoje.Year);
                 break;
         }
 
-        return await query.ToListAsync();
+        return query;
     }
 }

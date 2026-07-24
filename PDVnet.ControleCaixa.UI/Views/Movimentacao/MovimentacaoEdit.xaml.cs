@@ -25,6 +25,6 @@ public partial class MovimentacaoEdit : Window
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        NumericTextBoxHelper.SomenteNumeros(sender, e);
+        NumericTextBoxBehavior.SomenteNumeros(sender, e);
     }
 }

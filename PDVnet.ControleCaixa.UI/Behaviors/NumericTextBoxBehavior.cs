@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace PDVnet.ControleCaixa.UI.Behaviors;
 
-public static class NumericTextBoxHelper
+public static class NumericTextBoxBehavior
 {
     private static readonly Regex Regex = new(@"^\d*([,.]?\d{0,2})?$");
 

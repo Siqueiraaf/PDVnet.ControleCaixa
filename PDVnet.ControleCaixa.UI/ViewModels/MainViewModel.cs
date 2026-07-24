@@ -8,7 +8,6 @@ public partial class MainViewModel : BaseViewModel
     private readonly IDialogService _dialogService;
     public MovimentacaoListViewModel Lista { get; }
 
-
     public MainViewModel(IDialogService dialogService, MovimentacaoListViewModel lista)
     {
         _dialogService = dialogService;
@@ -21,9 +20,7 @@ public partial class MainViewModel : BaseViewModel
         var movimentacao = _dialogService.ShowCriarMovimentacao();
 
         if (movimentacao != null)
-        {
             await Lista.CarregarMovimentacoesAsync();
-        }
     }
 
     [RelayCommand]
@@ -35,9 +32,7 @@ public partial class MainViewModel : BaseViewModel
         var movimentacao = _dialogService.ShowEditarMovimentacao(Lista.MovimentacaoSelecionada);
 
         if (movimentacao != null)
-        {
             await Lista.CarregarMovimentacoesAsync();
-        }
     }
 
     [RelayCommand]
@@ -49,9 +44,8 @@ public partial class MainViewModel : BaseViewModel
         var resultado = _dialogService.ShowExcluirMovimentacao(Lista.MovimentacaoSelecionada);
 
         if (resultado == true)
-        {
             await Lista.CarregarMovimentacoesAsync();
-        }
+        
     }
 
     public async Task InicializarAsync()

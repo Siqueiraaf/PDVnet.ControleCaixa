@@ -18,18 +18,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Título -->
         <TextBlock Text="📝 Adicionar"
                FontSize="24"
                FontWeight="Bold"/>
-
 
         <Border Grid.Row="2"
             BorderBrush="Gray"
             BorderThickness="1"
             CornerRadius="10"
             Padding="20">
-
 
             <Grid>
 
@@ -51,10 +48,6 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-
-
-                <!-- Descrição -->
-
                 <StackPanel Grid.Row="0"
                         Grid.ColumnSpan="2">
 
@@ -72,9 +65,6 @@
 
                 </StackPanel>
 
-
-
-                <!-- Categoria -->
                 <TextBlock Grid.Row="2"
                        Grid.Column="0"
                        Text="Categoria:"
@@ -89,34 +79,27 @@
                       ItemsSource="{Binding Categorias}"
                       SelectedItem="{Binding Categoria}"/>
 
-                <!-- Tipo -->
                 <TextBlock Grid.Row="4"
                        Grid.Column="0"
                        Text="Tipo:"
                        FontWeight="Bold"
                        VerticalAlignment="Center"/>
 
-
                 <StackPanel Grid.Row="4"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         Margin="-30,0,0,0">
-
 
                     <RadioButton Content="Entrada"
                              Margin="0,0,20,0"
                              GroupName="Tipo"
                              IsChecked="{Binding IsEntrada}"/>
 
-
                     <RadioButton Content="Saída"
                              GroupName="Tipo"
                              IsChecked="{Binding IsSaida}"/>
-
-
                 </StackPanel>
 
-                <!-- Valor -->
                 <TextBlock Grid.Row="6"
                        Grid.Column="0"
                        Text="Valor:"
@@ -132,46 +115,34 @@
                          Text="{Binding Valor,
                             UpdateSourceTrigger=PropertyChanged}"/>
 
-                <!-- Status -->
                 <TextBlock Grid.Row="8"
                        Grid.Column="0"
                        Text="Status:"
                        FontWeight="Bold"
                        VerticalAlignment="Center"/>
 
-
                 <StackPanel Grid.Row="8"
                         Grid.Column="1"
                         Orientation="Horizontal"
                         Margin="10,0,0,0">
-
 
                     <RadioButton Content="Ativo"
                              Margin="-29,0,20,0"
                              GroupName="Status"
                              IsChecked="{Binding IsTrue}"/>
 
-
                     <RadioButton Content="Inativo"
                              GroupName="Status"
                              IsChecked="{Binding IsFalse}"/>
-
-
                 </StackPanel>
-
 
             </Grid>
 
         </Border>
 
-
-
-        <!-- Botões -->
-
         <StackPanel Grid.Row="4"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
-
 
             <Button Width="110"
                 Height="25"
@@ -179,15 +150,10 @@
                 Content="Cancelar"
                 Command="{Binding CancelarMovimentacaoCommand}"/>
 
-
             <Button Width="110"
                 Height="25"
                 Content="Cadastrar"
                 Command="{Binding CadastrarMovimentacaoCommand}"/>
-
-
         </StackPanel>
-
-
     </Grid>
 </Window>

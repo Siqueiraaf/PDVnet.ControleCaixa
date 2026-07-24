@@ -95,8 +95,8 @@
                                 Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <Grid Grid.Row="2"
-      Margin="0,10,0,10"
-      HorizontalAlignment="Center">
+                      Margin="0,10,0,10"
+                      HorizontalAlignment="Center">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

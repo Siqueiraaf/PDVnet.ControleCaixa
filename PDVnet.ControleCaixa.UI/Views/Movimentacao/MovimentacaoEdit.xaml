@@ -17,8 +17,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-        <!-- Título -->
         <TextBlock Text="✏️ Editar Movimentação"
                    FontSize="24"
                    FontWeight="Bold"/>
@@ -30,32 +28,28 @@
                 Padding="20">
 
             <Grid>
-
-                <!-- Linhas -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <!-- Descrição -->
+                    
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
-                    <!-- Categoria -->
+                    
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
-                    <!-- Tipo -->
+                    
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
-                    <!-- Valor -->
+                    
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
-                    <!-- Status -->
+                    
                 </Grid.RowDefinitions>
 
-                <!-- Colunas -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Descrição -->
                 <StackPanel Grid.Row="0"
                             Grid.ColumnSpan="2">
 
@@ -70,10 +64,8 @@
                              Text="{Binding Descricao,
                                     UpdateSourceTrigger=PropertyChanged}"
                              MaxLength="200"/>
-
                 </StackPanel>
 
-                <!-- Categoria -->
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
                            Text="Categoria:"
@@ -87,7 +79,6 @@
                           ItemsSource="{Binding Categorias}"
                           SelectedItem="{Binding Categoria}"/>
 
-                <!-- Tipo -->
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"
                            Text="Tipo:"
@@ -110,7 +101,6 @@
 
                 </StackPanel>
 
-                <!-- Valor -->
                 <TextBlock Grid.Row="6"
                            Grid.Column="0"
                            Text="Valor:"
@@ -123,10 +113,8 @@
                          HorizontalAlignment="Left"
                          Margin="-20,0,0,0"
                          PreviewTextInput="NumberValidationTextBox"
-                         Text="{Binding Valor,
-                                UpdateSourceTrigger=PropertyChanged}"/>
-
-                <!-- Status -->
+                         Text="{Binding Valor, UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <TextBlock Grid.Row="8"
                            Grid.Column="0"
                            Text="Status:"
@@ -146,14 +134,11 @@
                     <RadioButton Content="Inativo"
                                  GroupName="Status"
                                  IsChecked="{Binding IsFalse}"/>
-
                 </StackPanel>
             </Grid>
 
         </Border>
 
-
-        <!-- Botões -->
         <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
@@ -168,9 +153,7 @@
                     Height="25"
                     Content="Salvar"
                     Command="{Binding SalvarAlteracoesCommand}"/>
-
         </StackPanel>
-
     </Grid>
 
 </Window>

@@ -37,7 +37,7 @@ public class MovimentacaoService : IMovimentacaoService
         return await _repository.AtualizarMovimentacao(movimentacao);
     }
 
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesCategoria(string categoria)
+    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoesCategoria(string? categoria)
     {
         return await _repository.FiltrarMovimentacoesCategoria(categoria);
     }

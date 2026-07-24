@@ -2,7 +2,6 @@
 using PDVnet.ControleCaixa.Business.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.UI.ViewModels.Movimentacao;
-using System.Runtime.ConstrainedExecution;
 using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI.ViewModels;
@@ -11,9 +10,7 @@ public partial class MovimentacaoDeleteViewModel : MovimentacaoBaseViewModel
 {
     private readonly IMovimentacaoService _service;
 
-    public MovimentacaoDeleteViewModel(
-        IMovimentacaoService service,
-        MovimentacaoCaixa movimentacao)
+    public MovimentacaoDeleteViewModel(IMovimentacaoService service, MovimentacaoCaixa movimentacao)
     {
         _service = service;
 

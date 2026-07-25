@@ -1,6 +1,6 @@
 # PDVnet.ControleCaixa
 
-Projeto de um sistema desktop desenvolvido em **C#** utilizando **WPF**, padrão **MVVM** e **Entity Framework Core** para gerenciamento de movimentações de caixa.
+Sistema desktop desenvolvido em **C#** utilizando **WPF**, padrão **MVVM** e **Entity Framework Core** para gerenciamento de movimentações de caixa.
 
 O projeto foi criado com o objetivo de aplicar boas práticas de desenvolvimento, como separação de responsabilidades, arquitetura em camadas, injeção de dependências e persistência de dados utilizando SQL Server.
 

@@ -20,7 +20,7 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 
 ---
 
-# Tecnologias Utilizadas
+# Tecnologias e Ferramentas Utilizadas
 
 * C#
 * .NET
@@ -31,6 +31,8 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 * SQL Server
 * Dependency Injection
 * SSMS
+* Visual Studio
+* Readme.so (https://readme.so/)
 
 ---
 

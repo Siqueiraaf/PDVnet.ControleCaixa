@@ -1,14 +1,8 @@
-﻿using PDVnet.ControleCaixa.UI.Behaviors;
-using PDVnet.ControleCaixa.UI.ViewModels;
-using System.Text.RegularExpressions;
+﻿using PDVnet.ControleCaixa.UI.ViewModels;
 using System.Windows;
-using System.Windows.Input;
 
-namespace PDVnet.ControleCaixa.UI.Views;
+namespace PDVnet.ControleCaixa.UI.Views.Movimentacao;
 
-/// <summary>
-/// Lógica interna para MovimentacaoEdit.xaml
-/// </summary>
 public partial class MovimentacaoEdit : Window
 {
     public MovimentacaoEdit(MovimentacaoEditViewModel vm)
@@ -20,11 +14,7 @@ public partial class MovimentacaoEdit : Window
         vm.FecharJanela += resultado =>
         {
             DialogResult = resultado;
+            Close();
         };
-    }
-
-    private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-    {
-        NumericTextBoxBehavior.SomenteNumeros(sender, e);
     }
 }

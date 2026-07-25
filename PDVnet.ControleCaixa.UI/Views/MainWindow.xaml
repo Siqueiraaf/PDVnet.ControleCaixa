@@ -9,11 +9,6 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Controle de Caixa" Height="800" Width="1200">
-        
-
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </Window.Resources>
 
     <Grid Margin="20">
 
@@ -110,19 +105,19 @@
                     <TextBlock Grid.Column="0"
                                Text="FILTROS:"
                                FontWeight="Bold"
-                               VerticalAlignment="Center"
-                               Margin="0,0,15,0"/>
+                               Margin="0,30,15,0"/>
 
                     <StackPanel Grid.Column="1"
                                 Margin="5">
 
                         <TextBlock Text="Categoria"
-                        FontWeight="Bold"
-                        HorizontalAlignment="Center"/>
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
 
                         <ComboBox Width="150"
                                   Margin="0,5,0,0"
                                   ItemsSource="{Binding Lista.Categorias}"
+                                  Style="{StaticResource ComboBox3D}"
                                   SelectedItem="{Binding Lista.CategoriaSelecionada}"/>
                     </StackPanel>
 
@@ -135,6 +130,7 @@
 
                         <ComboBox Width="150"
                                   Margin="0,5,0,0"
+                                  Style="{StaticResource ComboBox3D}"
                                   ItemsSource="{Binding Lista.TiposFiltro}"
                                   SelectedItem="{Binding Lista.TipoSelecionado}"/>
 
@@ -150,22 +146,25 @@
                         <ComboBox Width="150"
                                   Margin="0,5,0,0"
                                   ItemsSource="{Binding Lista.PeriodosFiltro}"
+                                  Style="{StaticResource ComboBox3D}"
                                   SelectedItem="{Binding Lista.PeriodoSelecionado}"/>
 
                     </StackPanel>
 
                     <Button Grid.Column="4"
-                            Width="90"
+                            Width="85"
                             Height="30"
-                            Margin="10,15,5,0"
+                            Margin="10,20,5,0"
                             Content="Filtrar"
+                            Style="{StaticResource Button3D}"
                             Command="{Binding Lista.FiltrarMovimentacoesCommand}"/>
 
                     <Button Grid.Column="5"
-                            Width="90"
+                            Width="85"
                             Height="30"
-                            Margin="5,15,0,0"
-                            Content="Limpar filtros"
+                            Margin="5,20,0,0"
+                            Content="Limpar Filtros"
+                            Style="{StaticResource Button3D}"
                             Command="{Binding Lista.LimparFiltrosCommand}"/>
                 </Grid>
 
@@ -177,17 +176,20 @@
                     <Button Width="120"
                             Height="35"
                             Margin="0,0,10,0"
+                            Style="{StaticResource Button3D}"
                             Content="Cadastrar"
                             Command="{Binding CadastrarCommand}"/>
 
                     <Button Width="120"
                             Height="35"
                             Margin="0,0,10,0"
+                            Style="{StaticResource Button3D}"
                             Content="Editar"
                             Command="{Binding EditarCommand}"/>
 
                     <Button Width="120"
                             Height="35"
+                            Style="{StaticResource Button3D}"
                             Content="Excluir"
                             Command="{Binding ExcluirCommand}"/>
 

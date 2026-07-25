@@ -12,6 +12,7 @@ using PDVnet.ControleCaixa.UI.Views.Movimentacao;
 using System.Windows;
 using PDVnet.ControleCaixa.Data.Context;
 using PDVnet.ControleCaixa.Data;
+using PDVnet.ControleCaixa.UI.Components;
 
 namespace PDVnet.ControleCaixa.UI;
 
@@ -61,5 +62,6 @@ public partial class App : Application
         services.AddTransient<MovimentacaoCreate>();
         services.AddTransient<MovimentacaoEdit>();
         services.AddTransient<MovimentacaoDelete>();
+        services.AddTransient<MovimentacaoForm>();
     }
 }

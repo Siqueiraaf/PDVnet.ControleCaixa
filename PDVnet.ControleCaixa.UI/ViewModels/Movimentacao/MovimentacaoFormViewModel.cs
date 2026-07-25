@@ -2,7 +2,7 @@
 
 namespace PDVnet.ControleCaixa.UI.ViewModels.Movimentacao;
 
-public class MovimentacaoBaseViewModel : BaseViewModel
+public class MovimentacaoFormViewModel : BaseViewModel
 {
     public event Action<bool>? FecharJanela;
 

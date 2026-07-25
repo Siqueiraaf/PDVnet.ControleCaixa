@@ -12,6 +12,8 @@ public partial class MovimentacaoListViewModel : ObservableObject
 {
     private readonly IMovimentacaoService _service;
 
+    private readonly ObservableCollection<MovimentacaoCaixa> _todasMovimentacoes = [];
+
     public ObservableCollection<MovimentacaoCaixa> Movimentacoes { get; } = [];
 
     [ObservableProperty]
@@ -47,15 +49,16 @@ public partial class MovimentacaoListViewModel : ObservableObject
     }
 
     private const decimal SaldoMinimo = 100m;
-    private void AtualizarResumo()
-    {
-        TotalMovimentacoes = Movimentacoes.Count;
 
-        var totalEntradas = Movimentacoes
+    private void AtualizarResumo(IEnumerable<MovimentacaoCaixa> movimentacoes)
+    {
+        TotalMovimentacoes = movimentacoes.Count();
+
+        var totalEntradas = movimentacoes
             .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Entrada)
             .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 
-        var totalSaidas = Movimentacoes
+        var totalSaidas = movimentacoes
             .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Saida)
             .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 
@@ -72,8 +75,6 @@ public partial class MovimentacaoListViewModel : ObservableObject
         {
             Movimentacoes.Add(movimentacao);
         }
-
-        AtualizarResumo();
     }
 
     [RelayCommand]
@@ -81,7 +82,16 @@ public partial class MovimentacaoListViewModel : ObservableObject
     {
         var movimentacoes = await _service.ListarTodasMovimentacao();
 
-        AtualizarLista(movimentacoes);
+        _todasMovimentacoes.Clear();
+
+        foreach (var movimentacao in movimentacoes)
+        {
+            _todasMovimentacoes.Add(movimentacao);
+        }
+
+        AtualizarLista(_todasMovimentacoes);
+
+        AtualizarResumo(_todasMovimentacoes);
     }
 
     [RelayCommand]

@@ -195,6 +195,10 @@ PDVnet.ControleCaixa.UI
 ├── Services
 │   └── DialogService.cs
 │
+├── Styles
+│ 	├── ComboBoxStyles.xaml
+│   └── ButtonStyles.xaml
+│
 ├── ViewModels
 │   ├── BaseViewModel.cs
 │   ├── MainViewModel.cs

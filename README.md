@@ -199,7 +199,7 @@ PDVnet.ControleCaixa.UI
 │   ├── BaseViewModel.cs
 │   ├── MainViewModel.cs
 │   └── Movimentacao
-│       ├── MovimentacaoBaseViewModel.cs
+│       ├── MovimentacaoFormViewModel.cs
 │       ├── MovimentacaoCreateViewModel.cs
 │       ├── MovimentacaoDeleteViewModel.cs
 │       ├── MovimentacaoEditViewModel.cs
@@ -208,6 +208,8 @@ PDVnet.ControleCaixa.UI
 └── Views
     ├── MainWindow.xaml
     ├── MainWindow.xaml.cs
+	├── MovimentacaoForm.xaml
+    ├── MovimentacaoForm.cs
     └── Movimentacao
         ├── MovimentacaoCreate.xaml
         ├── MovimentacaoCreate.xaml.cs
@@ -426,3 +428,39 @@ A aplicação utiliza a seleção do item no DataGrid para identificar qual regi
 
 ```
 ---
+# Testes Unitários
+
+O projeto possui testes unitários para garantir o correto funcionamento das regras de negócio da aplicação.
+
+Atualmente são testadas as validações da classe `MovimentacaoValidator`, incluindo:
+
+- Descrição obrigatória.
+- Categoria obrigatória.
+- Valor maior que zero.
+- Limite máximo de 200 caracteres para a descrição.
+- Cenário de sucesso para uma movimentação válida.
+
+### Executando os testes
+
+Os testes unitários podem ser executados de duas formas:
+
+#### Pelo terminal
+
+Na raiz da solução, execute:
+
+```bash
+dotnet test
+```
+
+#### Pelo Visual Studio
+
+1. Clique com o botão direito no projeto **`PDVnet.ControleCaixa.Tests`**.
+2. Selecione **Executar Testes** (*Run Tests*).
+
+Sinta-se à vontade para executar todos os cenários de teste disponíveis. Eles validam as principais regras de negócio da aplicação, garantindo o comportamento esperado para operações válidas e inválidas.
+
+Se todos os testes forem executados com sucesso, será exibido um resultado semelhante a:
+
+```text
+Passed! - Failed: 0, Passed: X, Skipped: 0
+```

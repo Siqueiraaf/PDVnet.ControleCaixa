@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Adicionar" Height="480" Width="500">
+        Title="Adicionar Movimentação" Height="480" Width="500">
     
     <Grid Margin="20">
 
@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="📝 Adicionar"
+        <TextBlock Text="📝 Adicionar Movimentação"
                FontSize="24"
                FontWeight="Bold"/>
 
@@ -30,15 +30,15 @@
                 HorizontalAlignment="Right">
 
             <Button Width="110"
-                Height="25"
+                Height="35"
                 Margin="0,0,10,0"
-                Content="Cancelar"
+                Content="❌ Cancelar"
                 Style="{StaticResource Button3D}"
                 Command="{Binding CancelarMovimentacaoCommand}"/>
 
             <Button Width="110"
-                Height="25"
-                Content="Cadastrar"
+                Height="35"
+                Content="✔️ Adicionar"
                     Style="{StaticResource Button3D}"
                 Command="{Binding CadastrarMovimentacaoCommand}"/>
         </StackPanel>

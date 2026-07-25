@@ -42,7 +42,7 @@ public static class MovimentacaoOptions
     [
         "Todos",
         "Hoje",
-        "Últimos 7 dias",
+        "Semanal",
         "Mensal",
         "Semestral",
         "Anual"

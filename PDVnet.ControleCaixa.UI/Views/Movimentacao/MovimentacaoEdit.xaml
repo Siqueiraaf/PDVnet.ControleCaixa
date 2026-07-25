@@ -29,15 +29,15 @@
                     HorizontalAlignment="Right">
 
             <Button Width="110"
-                    Height="25"
+                    Height="35"
                     Margin="0,0,10,0"
-                    Content="Cancelar"
+                    Content="❌ Cancelar"
                     Style="{StaticResource Button3D}"
                     Command="{Binding CancelarMovimentacaoCommand}"/>
 
             <Button Width="110"
-                    Height="25"
-                    Content="Salvar"
+                    Height="35"
+                    Content="✔️ Salvar"
                     Style="{StaticResource Button3D}"
                     Command="{Binding SalvarAlteracoesCommand}"/>
         </StackPanel>

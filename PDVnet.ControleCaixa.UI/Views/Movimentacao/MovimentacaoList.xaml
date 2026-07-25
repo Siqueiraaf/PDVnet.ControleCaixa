@@ -16,16 +16,16 @@
                 Margin="0,10">
 
             <DataGrid
-                ItemsSource="{Binding Movimentacoes}"
-                SelectedItem="{Binding MovimentacaoSelecionada, Mode=TwoWay}"
-                AutoGenerateColumns="False"
-                CanUserAddRows="False"
-                CanUserDeleteRows="False"
-                CanUserResizeRows="False"
-                IsReadOnly="True"
-                SelectionMode="Single"
-                SelectionUnit="FullRow"
-                HorizontalAlignment="Stretch">
+                     ItemsSource="{Binding Movimentacoes}"
+                     SelectedItem="{Binding MovimentacaoSelecionada, Mode=TwoWay}"
+                     AutoGenerateColumns="False"
+                     CanUserAddRows="False"
+                     CanUserDeleteRows="False"
+                     CanUserResizeRows="False"
+                     IsReadOnly="True"
+                     SelectionMode="Single"
+                     SelectionUnit="FullRow"
+                     HorizontalAlignment="Stretch">
 
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Descrição" Width="*">

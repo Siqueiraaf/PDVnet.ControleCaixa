@@ -154,16 +154,16 @@
                     <Button Grid.Column="4"
                             Width="85"
                             Height="30"
-                            Margin="10,20,5,0"
-                            Content="Filtrar"
+                            Margin="0,20,5,0"
+                            Content="⌕ Filtrar"
                             Style="{StaticResource Button3D}"
                             Command="{Binding Lista.FiltrarMovimentacoesCommand}"/>
 
                     <Button Grid.Column="5"
                             Width="85"
                             Height="30"
-                            Margin="5,20,0,0"
-                            Content="Limpar Filtros"
+                            Margin="0,20,25,0"
+                            Content="🧹 Limpar"
                             Style="{StaticResource Button3D}"
                             Command="{Binding Lista.LimparFiltrosCommand}"/>
                 </Grid>
@@ -177,20 +177,20 @@
                             Height="35"
                             Margin="0,0,10,0"
                             Style="{StaticResource Button3D}"
-                            Content="Cadastrar"
+                            Content="➕ Cadastrar"
                             Command="{Binding CadastrarCommand}"/>
 
                     <Button Width="120"
                             Height="35"
                             Margin="0,0,10,0"
                             Style="{StaticResource Button3D}"
-                            Content="Editar"
+                            Content="✍︎ Editar"
                             Command="{Binding EditarCommand}"/>
 
                     <Button Width="120"
                             Height="35"
                             Style="{StaticResource Button3D}"
-                            Content="Excluir"
+                            Content="🗑 Excluir"
                             Command="{Binding ExcluirCommand}"/>
 
                 </StackPanel>

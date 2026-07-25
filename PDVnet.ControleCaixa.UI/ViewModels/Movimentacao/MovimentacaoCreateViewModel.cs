@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI.ViewModels;
 
-public partial class MovimentacaoCreateViewModel : MovimentacaoBaseViewModel
+public partial class MovimentacaoCreateViewModel : MovimentacaoFormViewModel
 {
     private readonly IMovimentacaoService _service;
 

@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace PDVnet.ControleCaixa.UI.ViewModels;
 
-public partial class MovimentacaoDeleteViewModel : MovimentacaoBaseViewModel
+public partial class MovimentacaoDeleteViewModel : MovimentacaoFormViewModel
 {
     private readonly IMovimentacaoService _service;
 

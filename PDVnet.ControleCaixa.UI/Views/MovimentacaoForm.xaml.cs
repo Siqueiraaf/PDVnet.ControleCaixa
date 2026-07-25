@@ -11,11 +11,18 @@ public partial class MovimentacaoForm : UserControl
         InitializeComponent();
     }
 
+    private static readonly Regex NumberRegex = new("[^0-9,]+");
+
+    private static readonly Regex DescriptionRegex =
+        new(@"^[\p{L}\p{N}\p{P}\p{Zs}]+$");
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new("[^0-9,]+");
+        e.Handled = NumberRegex.IsMatch(e.Text);
+    }
 
-        e.Handled = regex.IsMatch(e.Text);
+    private void DescriptionValidationTextBox(object sender, TextCompositionEventArgs e)
+    {
+        e.Handled = !DescriptionRegex.IsMatch(e.Text);
     }
 }

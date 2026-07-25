@@ -90,7 +90,6 @@ public partial class MovimentacaoListViewModel : ObservableObject
         }
 
         AtualizarLista(_todasMovimentacoes);
-
         AtualizarResumo(_todasMovimentacoes);
     }
 

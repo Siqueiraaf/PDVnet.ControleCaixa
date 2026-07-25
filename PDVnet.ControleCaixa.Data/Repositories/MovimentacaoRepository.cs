@@ -95,32 +95,32 @@ public class MovimentacaoRepository : IMovimentacaoRepository
     {
         var hoje = DateTime.Now;
 
-        switch (periodo.ToLower())
+        switch (periodo)
         {
-            case "diario":
-                query = query.Where(movimentoCaixa =>
-                    movimentoCaixa.DataMovimento.Date == hoje.Date);
+            case "Hoje":
+                query = query.Where(m =>
+                    m.DataMovimento.Date == hoje.Date);
                 break;
 
-            case "semanal":
-                query = query.Where(movimentoCaixa =>
-                    movimentoCaixa.DataMovimento >= hoje.AddDays(-7));
+            case "Semanal":
+                query = query.Where(m =>
+                    m.DataMovimento >= hoje.AddDays(-7));
                 break;
 
-            case "mensal":
-                query = query.Where(movimentoCaixa =>
-                    movimentoCaixa.DataMovimento.Month == hoje.Month &&
-                    movimentoCaixa.DataMovimento.Year == hoje.Year);
+            case "Mensal":
+                query = query.Where(m =>
+                    m.DataMovimento.Month == hoje.Month &&
+                    m.DataMovimento.Year == hoje.Year);
                 break;
 
-            case "semestral":
-                query = query.Where(movimentoCaixa =>
-                    movimentoCaixa.DataMovimento >= hoje.AddMonths(-6));
+            case "Semestral":
+                query = query.Where(m =>
+                    m.DataMovimento >= hoje.AddMonths(-6));
                 break;
 
-            case "anual":
-                query = query.Where(movimentoCaixa =>
-                    movimentoCaixa.DataMovimento.Year == hoje.Year);
+            case "Anual":
+                query = query.Where(m =>
+                    m.DataMovimento.Year == hoje.Year);
                 break;
         }
 

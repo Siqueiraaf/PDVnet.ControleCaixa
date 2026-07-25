@@ -14,8 +14,18 @@ public class MovimentacaoBaseViewModel : BaseViewModel
         get => _descricao;
         set
         {
-            _descricao = value;
-            OnPropertyChanged();
+            var texto = new string(value
+                .Where(c =>
+                    char.IsLetterOrDigit(c) ||
+                    char.IsWhiteSpace(c) ||
+                    char.IsPunctuation(c))
+                .ToArray());
+
+            if (_descricao != texto)
+            {
+                _descricao = texto;
+                OnPropertyChanged();
+            }
         }
     }
 

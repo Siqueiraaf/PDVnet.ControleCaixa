@@ -44,8 +44,9 @@
                              AcceptsReturn="True"
                              VerticalScrollBarVisibility="Auto"
                              MaxLength="200"
+                             PreviewTextInput="DescriptionValidationTextBox"
                              Text="{Binding Descricao,
-                             UpdateSourceTrigger=PropertyChanged}"/>
+                                UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
 
                 <TextBlock Grid.Row="2"

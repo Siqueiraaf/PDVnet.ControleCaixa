@@ -471,7 +471,7 @@ Se todos os testes forem executados com sucesso, será exibido um resultado seme
 Passed! - Failed: 0, Passed: X, Skipped: 0
 ```
 
-### Logs da aplicação
+## Logs da aplicação
 
 O sistema possui um mecanismo simples de registro de logs para armazenar algumas operações realizadas como edição, exclusão de movimentações. E fornecem um histórico básico das operações executadas.
 

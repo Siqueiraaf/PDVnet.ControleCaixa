@@ -470,3 +470,23 @@ Se todos os testes forem executados com sucesso, será exibido um resultado seme
 ```text
 Passed! - Failed: 0, Passed: X, Skipped: 0
 ```
+
+### Logs da aplicação
+
+O sistema possui um mecanismo simples de registro de logs para armazenar algumas operações realizadas como edição, exclusão de movimentações. E fornecem um histórico básico das operações executadas.
+
+Optei por não utilizar bibliotecas como **NLog** ou **Serilog**, pois o objetivo do projeto é manter uma implementação simples, de fácil entendimento e com poucas dependências externas. Para as necessidades da aplicação, um arquivo de texto é suficiente para registrar os eventos de alterações importantes, sem adicionar complexidade desnecessária ao projeto.
+
+Os registros de log foram implementados na camada **Data**, junto à infraestrutura de persistência. Essa abordagem permite registrar as informações completas das entidades durante as operações de edição e exclusão, sem criar dependências circulares entre os projetos **Business** e **Data**, preservando a organização da arquitetura da aplicação.
+
+Durante as edições, o sistema registra apenas os campos que sofreram alterações, informando o valor anterior e o novo valor, o que facilita a auditoria e o acompanhamento das modificações realizadas.
+
+Exemplo:
+
+    [26/07/2026 12:24:31] EXCLUSÃO: Id=34 | Descrição=Compra medicamento | Categoria=Fornecedores |  Tipo=Saida | Valor=R$ 2.000,00 | Status=True
+    [26/07/2026 12:24:50] EDIÇÃO: Id=32 | Descrição: 'Rf' -> 'Receita Federal' | Categoria:     'Despesas Fixas' -> 'Impostos'
+
+**Caminho:** `PDVnet.ControleCaixa\PDVnet.ControleCaixa.UI\bin\Debug\net10.0-windows`
+
+**Nome do arquivo:** `logs.txt`
+

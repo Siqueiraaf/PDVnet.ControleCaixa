@@ -146,6 +146,9 @@ PDVnet.ControleCaixa.Data
 ├── Interfaces
 │   └── IMovimentacaoRepository.cs
 │
+├── Helpers
+│   └── Log.cs
+│
 ├── Mappings
 │   └── MovimentacaoCaixaMap.cs
 │

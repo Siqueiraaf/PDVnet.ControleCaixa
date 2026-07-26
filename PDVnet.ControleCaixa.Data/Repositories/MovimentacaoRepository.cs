@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PDVnet.ControleCaixa.Data.Context;
+using PDVnet.ControleCaixa.Data.Helpers;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.Enums;
@@ -30,6 +31,16 @@ public class MovimentacaoRepository : IMovimentacaoRepository
         if (entidade == null)
             throw new Exception("Movimentação não encontrada");
 
+        var antesAlteracao = new MovimentacaoCaixa
+        {
+            Id = entidade.Id,
+            Descricao = entidade.Descricao,
+            Categoria = entidade.Categoria,
+            Valor = entidade.Valor,
+            Tipo = entidade.Tipo,
+            Status = entidade.Status
+        };
+
         entidade.Descricao = movimentacao.Descricao;
         entidade.Categoria = movimentacao.Categoria;
         entidade.Valor = movimentacao.Valor;
@@ -37,6 +48,10 @@ public class MovimentacaoRepository : IMovimentacaoRepository
         entidade.Status = movimentacao.Status;
 
         await _context.SaveChangesAsync();
+
+        var depoisAlteracao = entidade;
+
+        Log.Edicao(antesAlteracao, depoisAlteracao);
 
         return entidade;
     }
@@ -57,6 +72,8 @@ public class MovimentacaoRepository : IMovimentacaoRepository
 
         _context.MovimentacoesCaixa.Remove(movimentacao);
         await _context.SaveChangesAsync();
+
+        Log.Exclusao(movimentacao);
 
         return true;
     }

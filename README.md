@@ -2,7 +2,7 @@
 
 Sistema desktop desenvolvido em **C#** utilizando **WPF**, padrão **MVVM** e **Entity Framework Core** para gerenciamento de movimentações de caixa.
 
-O projeto foi criado com o objetivo de aplicar boas práticas de desenvolvimento, como separação de responsabilidades, arquitetura em camadas, injeção de dependências e persistência de dados utilizando SQL Server.
+O projeto foi criado com o objetivo de ser simples e aplicar boas práticas de desenvolvimento, como separação de responsabilidades, arquitetura em camadas, injeção de dependências e persistência de dados utilizando SQL Server.
 
 Próximo ao final desta documentação haverá uma explicação de `configuração` e `funcionalidades` da tela.
 

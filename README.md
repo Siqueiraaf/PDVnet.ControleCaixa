@@ -84,6 +84,7 @@ Exemplos:
 
 A camada Model funciona como uma base compartilhada entre as demais camadas, mantendo os objetos principais da aplicação desacoplados das regras de negócio e da infraestrutura.
 
+
 ---
 
 ## Business

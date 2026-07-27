@@ -83,6 +83,7 @@ Exemplos:
 * **TipoMovimentacao**: enumeração responsável por definir os tipos de movimentação disponíveis, como entrada e saída.
 
 A camada Model funciona como uma base compartilhada entre as demais camadas, mantendo os objetos principais da aplicação desacoplados das regras de negócio e da infraestrutura.
+
 ---
 
 ## Business

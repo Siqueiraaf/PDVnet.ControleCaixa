@@ -40,7 +40,7 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 
 # Arquitetura
 
-O projeto foi desenvolvido seguindo uma arquitetura em camadas, separando responsabilidades para facilitando manutenção, testes e evolução da aplicação.
+O projeto foi desenvolvido seguindo uma arquitetura em camadas, separando responsabilidades para facilitar a manutenção, testes e evolução da aplicação.
 
 ```
 PDVnet.ControleCaixa

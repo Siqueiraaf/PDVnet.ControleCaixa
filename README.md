@@ -17,6 +17,8 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 * Controle de entradas e saídas
 * Validação das informações antes da gravação
 * Interface desenvolvida em WPF utilizando o padrão MVVM
+* Cálculo do saldo total em caixa
+* Cálculo de todas as movimentações
 
 ---
 

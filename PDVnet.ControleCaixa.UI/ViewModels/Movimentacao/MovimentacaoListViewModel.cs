@@ -17,6 +17,12 @@ public partial class MovimentacaoListViewModel : ObservableObject
     public ObservableCollection<MovimentacaoCaixa> Movimentacoes { get; } = [];
 
     [ObservableProperty]
+    private int paginaAtual = 1;
+
+    [ObservableProperty]
+    private int totalPaginas;
+
+    [ObservableProperty]
     private MovimentacaoCaixa? movimentacaoSelecionada;
 
     [ObservableProperty]
@@ -50,7 +56,7 @@ public partial class MovimentacaoListViewModel : ObservableObject
 
     private const decimal SaldoMinimo = 100m;
 
-    private void AtualizarResumo(IEnumerable<MovimentacaoCaixa> movimentacoes)
+    private void AtualizarIndicadores(IEnumerable<MovimentacaoCaixa> movimentacoes)
     {
         TotalMovimentacoes = movimentacoes.Count();
 
@@ -67,7 +73,7 @@ public partial class MovimentacaoListViewModel : ObservableObject
         SaldoBaixo = SaldoTotal < SaldoMinimo;
     }
 
-    private void AtualizarLista(IEnumerable<MovimentacaoCaixa> movimentacoes)
+    private void AtualizarListagem(IEnumerable<MovimentacaoCaixa> movimentacoes)
     {
         Movimentacoes.Clear();
 
@@ -78,27 +84,13 @@ public partial class MovimentacaoListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public async Task CarregarMovimentacoesAsync()
-    {
-        var movimentacoes = await _service.ListarTodasMovimentacao();
-
-        _todasMovimentacoes.Clear();
-
-        foreach (var movimentacao in movimentacoes)
-        {
-            _todasMovimentacoes.Add(movimentacao);
-        }
-
-        AtualizarLista(_todasMovimentacoes);
-        AtualizarResumo(_todasMovimentacoes);
-    }
-
-    [RelayCommand]
     public async Task LimparFiltrosAsync()
     {
         CategoriaSelecionada = "Todos";
         TipoSelecionado = "Todos";
         PeriodoSelecionado = "Todos";
+
+        PaginaAtual = 1;
 
         await CarregarMovimentacoesAsync();
     }
@@ -106,11 +98,54 @@ public partial class MovimentacaoListViewModel : ObservableObject
     [RelayCommand]
     public async Task FiltrarMovimentacoesAsync()
     {
-        var resultado = await _service.FiltrarMovimentacoes(
+        PaginaAtual = 1;
+        await CarregarMovimentacoesAsync();
+    }
+
+    [RelayCommand]
+    public async Task CarregarMovimentacoesAsync()
+    {
+        var todasMovimentacoes = await _service.ListarTodasMovimentacao();
+
+        _todasMovimentacoes.Clear();
+
+        foreach (var movimentacao in todasMovimentacoes)
+        {
+            _todasMovimentacoes.Add(movimentacao);
+        }
+
+        AtualizarIndicadores(_todasMovimentacoes);
+
+        var resultado = await _service.ListarComPaginacao(
+            PaginaAtual,
             CategoriaSelecionada,
             TipoSelecionado,
             PeriodoSelecionado);
 
-        AtualizarLista(resultado);
+        AtualizarListagem(resultado.Itens);
+
+        TotalPaginas = resultado.TotalPaginas;
+    }
+
+    [RelayCommand]
+    private async Task ProximaPagina()
+    {
+        if (PaginaAtual >= TotalPaginas)
+            return;
+
+        PaginaAtual++;
+
+        await CarregarMovimentacoesAsync();
+    }
+
+    [RelayCommand]
+    private async Task PaginaAnterior()
+    {
+        if (PaginaAtual <= 1)
+            return;
+
+        PaginaAtual--;
+
+        await CarregarMovimentacoesAsync();
     }
 }

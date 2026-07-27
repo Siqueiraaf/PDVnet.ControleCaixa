@@ -3,6 +3,7 @@ using PDVnet.ControleCaixa.Data.Context;
 using PDVnet.ControleCaixa.Data.Helpers;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
+using PDVnet.ControleCaixa.Model.DTOs;
 using PDVnet.ControleCaixa.Model.Enums;
 
 namespace PDVnet.ControleCaixa.Data.Repository;
@@ -84,30 +85,6 @@ public class MovimentacaoRepository : IMovimentacaoRepository
             movimentacaoCaixa => movimentacaoCaixa.Id == id);
     }
 
-    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
-    {
-        var query = _context.MovimentacoesCaixa.AsQueryable();
-
-        if (!string.IsNullOrEmpty(categoria) && categoria != "Todos")
-        {
-            query = query.Where(movimentoCaixa => movimentoCaixa.Categoria == categoria);
-        }
-
-        if (!string.IsNullOrEmpty(tipo) && tipo != "Todos")
-        {
-            var tipoEnum = Enum.Parse<TipoMovimentacao>(tipo);
-
-            query = query.Where(movimentoCaixa => movimentoCaixa.Tipo == tipoEnum);
-        }
-
-        if (!string.IsNullOrEmpty(periodo) && periodo != "Todos")
-        {
-            query = AplicarFiltroPeriodo(query, periodo);
-        }
-
-        return await query.ToListAsync();
-    }
-
     private static IQueryable<MovimentacaoCaixa> AplicarFiltroPeriodo(IQueryable<MovimentacaoCaixa> query, string periodo)
     {
         var hoje = DateTime.Now;
@@ -115,32 +92,84 @@ public class MovimentacaoRepository : IMovimentacaoRepository
         switch (periodo)
         {
             case "Hoje":
-                query = query.Where(m =>
-                    m.DataMovimento.Date == hoje.Date);
+                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento.Date == hoje.Date);
                 break;
 
             case "Semanal":
-                query = query.Where(m =>
-                    m.DataMovimento >= hoje.AddDays(-7));
+                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento >= hoje.AddDays(-7));
                 break;
 
             case "Mensal":
-                query = query.Where(m =>
-                    m.DataMovimento.Month == hoje.Month &&
-                    m.DataMovimento.Year == hoje.Year);
+                query = query.Where(movimentacaoCaixa =>
+                    movimentacaoCaixa.DataMovimento.Month == hoje.Month &&
+                    movimentacaoCaixa.DataMovimento.Year == hoje.Year);
                 break;
 
             case "Semestral":
-                query = query.Where(m =>
-                    m.DataMovimento >= hoje.AddMonths(-6));
+                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento >= hoje.AddMonths(-6));
                 break;
 
             case "Anual":
-                query = query.Where(m =>
-                    m.DataMovimento.Year == hoje.Year);
+                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento.Year == hoje.Year);
                 break;
         }
 
         return query;
+    }
+
+    public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
+    {
+        return await CriarConsulta(categoria, tipo, periodo)
+        .ToListAsync();
+    }
+
+    private IQueryable<MovimentacaoCaixa> CriarConsulta(string? categoria, string? tipo, string? periodo)
+    {
+        var query = _context.MovimentacoesCaixa.AsQueryable();
+
+        if (!string.IsNullOrEmpty(categoria) && categoria != "Todos")
+        {
+            query = query.Where(movimentacaoCaixa => movimentacaoCaixa.Categoria == categoria);
+        }
+
+        if (!string.IsNullOrEmpty(tipo) && tipo != "Todos")
+        {
+            var tipoEnum = Enum.Parse<TipoMovimentacao>(tipo);
+
+            query = query.Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == tipoEnum);
+        }
+
+        if (!string.IsNullOrEmpty(periodo) && periodo != "Todos")
+        {
+            query = AplicarFiltroPeriodo(query, periodo);
+        }
+
+        return query;
+    }
+
+    public async Task<PaginacaoDto<MovimentacaoCaixa>> ListarComPaginacao(
+        int pagina,
+        int tamanhoPagina,
+        string? categoria,
+        string? tipo,
+        string? periodo)
+    {
+        var query = CriarConsulta(categoria, tipo, periodo);
+
+        var total = await query.CountAsync();
+
+        var itens = await query
+            .OrderByDescending(x => x.Id)
+            .Skip((pagina - 1) * tamanhoPagina)
+            .Take(tamanhoPagina)
+            .ToListAsync();
+
+        return new PaginacaoDto<MovimentacaoCaixa>
+        {
+            Itens = itens,
+            PaginaAtual = pagina,
+            TotalPaginas = (int)Math.Ceiling((double)total / tamanhoPagina),
+            TotalRegistros = total
+        };
     }
 }

@@ -5,11 +5,15 @@ public static class MovimentacaoOptions
     public static List<string> Categorias { get; } =
     [
         "Vendas",
-        "Despesas Fixas",
+        "Serviços",
         "Fornecedores",
-        "Impostos",
-        "Faturamento",
+        "Despesas Fixas",
+        "Compras",
         "Tecnologia",
+        "Impostos",
+        "Salários",
+        "Manutenção",
+        "Investimentos",
         "Outros"
     ];
 
@@ -17,11 +21,15 @@ public static class MovimentacaoOptions
     [
         "Todos",
         "Vendas",
-        "Despesas Fixas",
+        "Serviços",
         "Fornecedores",
-        "Impostos",
-        "Faturamento",
+        "Despesas Fixas",
+        "Compras",
         "Tecnologia",
+        "Impostos",
+        "Salários",
+        "Manutenção",
+        "Investimentos",
         "Outros"
     ];
 

@@ -2,13 +2,14 @@
 using PDVnet.ControleCaixa.Business.Validators;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
-using PDVnet.ControleCaixa.Model.Enums;
+using PDVnet.ControleCaixa.Model.DTOs;
 
 namespace PDVnet.ControleCaixa.Business.Services;
 
 public class MovimentacaoService : IMovimentacaoService
 {
     private readonly IMovimentacaoRepository _repository;
+    private const int TamanhoPaginacao = 50;
 
     public MovimentacaoService(IMovimentacaoRepository repository)
     {
@@ -40,5 +41,10 @@ public class MovimentacaoService : IMovimentacaoService
     public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
     {
         return await _repository.FiltrarMovimentacoes(categoria, tipo, periodo);
+    }
+
+    public async Task<PaginacaoDto<MovimentacaoCaixa>> ListarComPaginacao(int pagina, string? categoria, string? tipo, string? periodo)
+    {
+        return await _repository.ListarComPaginacao(pagina, TamanhoPaginacao, categoria, tipo, periodo);
     }
 }

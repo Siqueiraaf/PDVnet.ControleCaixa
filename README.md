@@ -65,19 +65,24 @@ PDVnet.ControleCaixa.Model
 │
 ├── MovimentacaoCaixa.cs
 │
+├── DTOs
+│	└── PaginacaoDto.cs
+│
 └── Enums
     └── TipoMovimentacao.cs
 ```
-Responsável pelas entidades e enums utilizados pela aplicação.
+
+Responsável por centralizar os modelos utilizados pela aplicação, contendo as entidades de domínio, objetos de transferência de dados (DTOs) e enumerações compartilhadas entre as camadas do sistema.
+
+Esta camada não possui regras de negócio ou acesso ao banco de dados, servindo apenas como definição dos objetos e estruturas utilizadas pela aplicação.
 
 Exemplos:
 
-* MovimentacaoCaixa
-* TipoMovimentacao
-* Categoria (caso utilizada)
+* **MovimentacaoCaixa**: entidade principal responsável por representar uma movimentação financeira do caixa.
+* **PaginacaoDto**: objeto utilizado para transportar informações de paginação, como registros retornados, página atual e total de páginas disponíveis.
+* **TipoMovimentacao**: enumeração responsável por definir os tipos de movimentação disponíveis, como entrada e saída.
 
-Esta camada representa apenas os objetos de domínio da aplicação.
-
+A camada Model funciona como uma base compartilhada entre as demais camadas, mantendo os objetos principais da aplicação desacoplados das regras de negócio e da infraestrutura.
 ---
 
 ## Business

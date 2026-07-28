@@ -23,24 +23,24 @@
                FontSize="24"
                FontWeight="Bold"/>
 
-        <components:MovimentacaoForm Grid.Row="2"/>
+        <components:MovimentacaoForm Grid.Row="2" ExibirStatus="False"/>
 
         <StackPanel Grid.Row="4"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
 
             <Button Width="110"
-                Height="35"
-                Margin="0,0,10,0"
-                Content="❌ Cancelar"
-                Style="{StaticResource Button3D}"
-                Command="{Binding CancelarMovimentacaoCommand}"/>
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Content="❌ Cancelar"
+                    Style="{StaticResource Button3D}"
+                    Command="{Binding CancelarMovimentacaoCommand}"/>
 
             <Button Width="110"
-                Height="35"
-                Content="✔️ Adicionar"
+                    Height="35"
+                    Content="✔️ Adicionar"
                     Style="{StaticResource Button3D}"
-                Command="{Binding CadastrarMovimentacaoCommand}"/>
+                    Command="{Binding CadastrarMovimentacaoCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -22,7 +22,7 @@
                    FontSize="24"
                    FontWeight="Bold"/>
 
-        <components:MovimentacaoForm Grid.Row="2"/>
+        <components:MovimentacaoForm Grid.Row="2" ExibirStatus="True"/>
 
             <StackPanel Grid.Row="4"
                     Orientation="Horizontal"

@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -25,4 +26,17 @@ public partial class MovimentacaoForm : UserControl
     {
         e.Handled = !DescriptionRegex.IsMatch(e.Text);
     }
+
+    public bool ExibirStatus
+    {
+        get => (bool)GetValue(ExibirStatusProperty);
+        set => SetValue(ExibirStatusProperty, value);
+    }
+
+    public static readonly DependencyProperty ExibirStatusProperty =
+        DependencyProperty.Register(
+            nameof(ExibirStatus),
+            typeof(bool),
+            typeof(MovimentacaoForm),
+            new PropertyMetadata(true));
 }

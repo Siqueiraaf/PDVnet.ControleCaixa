@@ -113,12 +113,17 @@
                            FontWeight="Bold"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"
-                           Margin="0,0,15,0"/>
-
+                           Margin="0,0,15,0"
+                           Visibility="{Binding ExibirStatus,
+                                RelativeSource={RelativeSource AncestorType=UserControl},
+                                Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <StackPanel Grid.Row="8"
                             Grid.Column="1"
-                            Orientation="Horizontal">
+                            Orientation="Horizontal"
+                            Visibility="{Binding ExibirStatus,
+                                 RelativeSource={RelativeSource AncestorType=UserControl},
+                                 Converter={StaticResource BooleanToVisibilityConverter}}">
 
                     <RadioButton Content="Ativo"
                                  Margin="0,0,25,0"
@@ -126,11 +131,9 @@
                                  IsChecked="{Binding IsTrue}"/>
 
                     <RadioButton Content="Inativo"
-                             GroupName="Status"
-                             IsChecked="{Binding IsFalse}"/>
-
+                                 GroupName="Status"
+                                 IsChecked="{Binding IsFalse}"/>
                 </StackPanel>
-
 
             </Grid>
 

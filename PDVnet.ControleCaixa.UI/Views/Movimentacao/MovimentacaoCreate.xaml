@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Adicionar Movimentação" Height="430" Width="500">
+        Title="Adicionar Movimentação" Height="450" Width="500">
     
     <Grid Margin="20">
 

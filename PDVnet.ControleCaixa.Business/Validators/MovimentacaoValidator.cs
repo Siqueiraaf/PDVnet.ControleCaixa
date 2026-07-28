@@ -13,9 +13,6 @@ public static class MovimentacaoValidator
         if (string.IsNullOrWhiteSpace(movimentacao.Descricao))
             throw new BusinessException("A descrição é obrigatória.");
 
-        if (string.IsNullOrWhiteSpace(movimentacao.Categoria))
-            throw new BusinessException("A categoria é obrigatória.");
-
         if (movimentacao.Valor <= 0)
             throw new BusinessException("O valor deve ser maior que zero.");
 

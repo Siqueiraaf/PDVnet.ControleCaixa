@@ -10,5 +10,5 @@ public class MovimentacaoCaixa
     public string? Categoria { get; set; }
     public required decimal Valor { get; set; }
     public DateTime DataMovimento { get; init; }
-    public required bool Status { get; set; }
+    public bool Status { get; set; }
 }

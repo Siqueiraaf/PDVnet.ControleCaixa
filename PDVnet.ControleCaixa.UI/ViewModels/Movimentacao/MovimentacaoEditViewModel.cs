@@ -27,7 +27,6 @@ public partial class MovimentacaoEditViewModel : MovimentacaoFormViewModel
         Descricao = movimentacao.Descricao;
         Categoria = movimentacao.Categoria ?? string.Empty;
         Valor = movimentacao.Valor;
-        Status = movimentacao.Status;
 
         IsEntrada = movimentacao.Tipo == TipoMovimentacao.Entrada;
         IsSaida = movimentacao.Tipo == TipoMovimentacao.Saida;
@@ -45,7 +44,6 @@ public partial class MovimentacaoEditViewModel : MovimentacaoFormViewModel
                 Categoria = Categoria,
                 Valor = Valor,
                 Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
-                Status = Status
             };
 
             await _service.EditarMovimentacao(MovimentacaoEditada);

@@ -22,7 +22,6 @@ public partial class MovimentacaoCreateViewModel : MovimentacaoFormViewModel
     [RelayCommand]
     private async Task CadastrarMovimentacao()
     {
-        var Status = true;
 
         try 
         {

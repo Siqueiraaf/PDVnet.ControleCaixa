@@ -14,7 +14,7 @@ public class MovimentacaoCaixaMap : IEntityTypeConfiguration<MovimentacaoCaixa>
 
         entity.Property(movimentoCaixa => movimentoCaixa.Descricao).HasMaxLength(200).IsRequired();
         entity.Property(movimentoCaixa => movimentoCaixa.Tipo).IsRequired();
-        entity.Property(movimentoCaixa => movimentoCaixa.Categoria).HasMaxLength(100).IsRequired();
+        entity.Property(movimentoCaixa => movimentoCaixa.Categoria).HasMaxLength(100);
         entity.Property(movimentoCaixa => movimentoCaixa.Valor).HasColumnType("decimal(10,2)");
         entity.Property(movimentoCaixa => movimentoCaixa.Status).IsRequired();
     }

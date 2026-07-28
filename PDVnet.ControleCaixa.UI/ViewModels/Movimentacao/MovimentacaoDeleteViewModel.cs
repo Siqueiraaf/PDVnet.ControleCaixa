@@ -19,7 +19,6 @@ public partial class MovimentacaoDeleteViewModel : MovimentacaoFormViewModel
         Categoria = movimentacao.Categoria;
         Valor = movimentacao.Valor;
         Tipo = movimentacao.Tipo.ToString();
-        Status = movimentacao.Status;
     }
 
     [RelayCommand]

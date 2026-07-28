@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Adicionar Movimentação" Height="480" Width="500">
+        Title="Adicionar Movimentação" Height="450" Width="500">
     
     <Grid Margin="20">
 
@@ -30,17 +30,17 @@
                 HorizontalAlignment="Right">
 
             <Button Width="110"
-                Height="35"
-                Margin="0,0,10,0"
-                Content="❌ Cancelar"
-                Style="{StaticResource Button3D}"
-                Command="{Binding CancelarMovimentacaoCommand}"/>
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Content="❌ Cancelar"
+                    Style="{StaticResource Button3D}"
+                    Command="{Binding CancelarMovimentacaoCommand}"/>
 
             <Button Width="110"
-                Height="35"
-                Content="✔️ Adicionar"
+                    Height="35"
+                    Content="✔️ Adicionar"
                     Style="{StaticResource Button3D}"
-                Command="{Binding CadastrarMovimentacaoCommand}"/>
+                    Command="{Binding CadastrarMovimentacaoCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

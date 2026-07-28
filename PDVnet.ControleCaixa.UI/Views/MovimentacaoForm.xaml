@@ -106,32 +106,6 @@
                          PreviewTextInput="NumberValidationTextBox"
                          Text="{Binding Valor,
                          UpdateSourceTrigger=PropertyChanged}"/>
-
-                <TextBlock Grid.Row="8"
-                           Grid.Column="0"
-                           Text="Status:"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Right"
-                           Margin="0,0,15,0"/>
-
-
-                <StackPanel Grid.Row="8"
-                            Grid.Column="1"
-                            Orientation="Horizontal">
-
-                    <RadioButton Content="Ativo"
-                                 Margin="0,0,25,0"
-                                 GroupName="Status"
-                                 IsChecked="{Binding IsTrue}"/>
-
-                    <RadioButton Content="Inativo"
-                             GroupName="Status"
-                             IsChecked="{Binding IsFalse}"/>
-
-                </StackPanel>
-
-
             </Grid>
 
         </Border>

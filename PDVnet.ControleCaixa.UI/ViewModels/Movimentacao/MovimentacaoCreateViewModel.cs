@@ -22,6 +22,7 @@ public partial class MovimentacaoCreateViewModel : MovimentacaoFormViewModel
     [RelayCommand]
     private async Task CadastrarMovimentacao()
     {
+
         try 
         {
             MovimentacaoCriada = new MovimentacaoCaixa
@@ -30,7 +31,7 @@ public partial class MovimentacaoCreateViewModel : MovimentacaoFormViewModel
                 Categoria = Categoria,
                 Valor = Valor,
                 Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
-                Status = Status,
+                Status = true,
                 DataMovimento = DateTime.Now
             };
 

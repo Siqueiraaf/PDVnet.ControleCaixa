@@ -71,7 +71,8 @@ public class MovimentacaoRepository : IMovimentacaoRepository
             return false;
         }
 
-        _context.MovimentacoesCaixa.Remove(movimentacao);
+        movimentacao.Status = false;
+
         await _context.SaveChangesAsync();
 
         Log.Exclusao(movimentacao);

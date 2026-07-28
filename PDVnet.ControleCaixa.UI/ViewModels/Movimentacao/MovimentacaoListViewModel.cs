@@ -58,13 +58,15 @@ public partial class MovimentacaoListViewModel : ObservableObject
 
     private void AtualizarIndicadores(IEnumerable<MovimentacaoCaixa> movimentacoes)
     {
-        TotalMovimentacoes = movimentacoes.Count();
+        var movimentacoesAtivas = movimentacoes.Where(movimentacaoCaixa => movimentacaoCaixa.Status);
 
-        var totalEntradas = movimentacoes
+        TotalMovimentacoes = movimentacoesAtivas.Count();
+
+        var totalEntradas = movimentacoesAtivas
             .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Entrada)
             .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 
-        var totalSaidas = movimentacoes
+        var totalSaidas = movimentacoesAtivas
             .Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == TipoMovimentacao.Saida)
             .Sum(movimentacaoCaixa => movimentacaoCaixa.Valor);
 

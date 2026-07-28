@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Editar Movimentação" Height="480" Width="500"
+        Title="Editar Movimentação" Height="430" Width="500"
         WindowStartupLocation="CenterScreen">
 
     <Grid Margin="20">
@@ -22,7 +22,7 @@
                    FontSize="24"
                    FontWeight="Bold"/>
 
-        <components:MovimentacaoForm Grid.Row="2" ExibirStatus="True"/>
+        <components:MovimentacaoForm Grid.Row="2"/>
 
             <StackPanel Grid.Row="4"
                     Orientation="Horizontal"

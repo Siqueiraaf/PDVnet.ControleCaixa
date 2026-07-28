@@ -32,7 +32,7 @@ public partial class MovimentacaoCreateViewModel : MovimentacaoFormViewModel
                 Categoria = Categoria,
                 Valor = Valor,
                 Tipo = IsEntrada ? TipoMovimentacao.Entrada : TipoMovimentacao.Saida,
-                Status = Status,
+                Status = true,
                 DataMovimento = DateTime.Now
             };
 

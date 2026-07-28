@@ -25,7 +25,7 @@ public partial class MovimentacaoEditViewModel : MovimentacaoFormViewModel
 
         Id = movimentacao.Id;
         Descricao = movimentacao.Descricao;
-        Categoria = movimentacao.Categoria;
+        Categoria = movimentacao.Categoria ?? string.Empty;
         Valor = movimentacao.Valor;
         Status = movimentacao.Status;
 

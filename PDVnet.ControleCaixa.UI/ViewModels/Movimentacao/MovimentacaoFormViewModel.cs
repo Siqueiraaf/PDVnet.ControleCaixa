@@ -88,39 +88,6 @@ public class MovimentacaoFormViewModel : BaseViewModel
 
     public List<string> Tipos => MovimentacaoOptions.Tipos;
 
-    private bool _status = true;
-    public bool Status
-    {
-        get => _status;
-        set
-        {
-            _status = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(IsTrue));
-            OnPropertyChanged(nameof(IsFalse));
-        }
-    }
-
-    public bool IsTrue
-    {
-        get => Status;
-        set
-        {
-            if (value)
-                Status = true;
-        }
-    }
-
-    public bool IsFalse
-    {
-        get => !Status;
-        set
-        {
-            if (value)
-                Status = false;
-        }
-    }
-
     protected void SolicitarFechamento(bool resultado = true)
     {
         FecharJanela?.Invoke(resultado);

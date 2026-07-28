@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:PDVnet.ControleCaixa.UI.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Adicionar Movimentação" Height="480" Width="500">
+        Title="Adicionar Movimentação" Height="430" Width="500">
     
     <Grid Margin="20">
 
@@ -23,7 +23,7 @@
                FontSize="24"
                FontWeight="Bold"/>
 
-        <components:MovimentacaoForm Grid.Row="2" ExibirStatus="False"/>
+        <components:MovimentacaoForm Grid.Row="2"/>
 
         <StackPanel Grid.Row="4"
                 Orientation="Horizontal"

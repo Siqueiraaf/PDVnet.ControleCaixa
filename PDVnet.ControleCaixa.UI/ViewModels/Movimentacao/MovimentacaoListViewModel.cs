@@ -42,6 +42,8 @@ public partial class MovimentacaoListViewModel : ObservableObject
 
     [ObservableProperty]
     private bool saldoBaixo;
+    
+    public event Action? ScrollTopoLista;
 
     public List<string> Categorias => MovimentacaoOptions.CategoriasFiltro;
 
@@ -83,6 +85,8 @@ public partial class MovimentacaoListViewModel : ObservableObject
         {
             Movimentacoes.Add(movimentacao);
         }
+
+        ScrollTopoLista?.Invoke();
     }
 
     [RelayCommand]

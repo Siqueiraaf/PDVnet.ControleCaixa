@@ -33,7 +33,24 @@
                     IsReadOnly="True"
                     SelectionMode="Single"
                     SelectionUnit="FullRow"
+                    HeadersVisibility="Column"
                     HorizontalAlignment="Stretch">
+
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Padding" Value="5,0"/>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#B8D8F8"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="BorderBrush" Value="#B8D8F8"/>
+                                </Trigger>
+                            </Style.Triggers>
+
+                        </Style>
+                    </DataGrid.Resources>
 
                     <DataGrid.Columns>
 
@@ -56,9 +73,29 @@
                                             Binding="{Binding Categoria}"
                                             Width="180"/>
 
-                        <DataGridTextColumn Header="Valor"
-                                            Binding="{Binding Valor, StringFormat={}{0:C}, ConverterCulture=pt-BR}"
-                                            Width="120"/>
+                        <DataGridTemplateColumn Header="Valor" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding Valor, StringFormat={}{0:C}, ConverterCulture=pt-BR}">
+
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="DarkGreen"/>
+
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Tipo}" Value="Saida">
+                                                        <Setter Property="Foreground" Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+
+                                        </TextBlock.Style>
+
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Status"
                                             Binding="{Binding Status, Converter={StaticResource StatusConverter}}"

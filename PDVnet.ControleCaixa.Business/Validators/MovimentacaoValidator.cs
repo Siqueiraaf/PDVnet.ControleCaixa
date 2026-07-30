@@ -15,5 +15,8 @@ public static class MovimentacaoValidator
 
         if (movimentacao.Descricao.Length > 200)
             throw new BusinessException("A descrição deve ter no máximo 200 caracteres.");
+
+        if (movimentacao.Valor > 99999999.99m)
+            throw new BusinessException("O valor informado ultrapassa o limite permitido.");
     }
 }

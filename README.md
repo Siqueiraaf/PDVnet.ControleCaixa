@@ -1,4 +1,4 @@
-# PDVnet.ControleCaixa
+# orde.P.ControleCaixa
 
 Sistema desktop desenvolvido em **C#** utilizando **WPF**, padrão **MVVM** e **Entity Framework Core** para gerenciamento de movimentações de caixa.
 

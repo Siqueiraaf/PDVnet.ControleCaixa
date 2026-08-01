@@ -164,7 +164,7 @@ Responsabilidades:
 * Consultas
 * Inserções
 * Atualizações
-* Exclusões
+* Exclusões(Inativo)
 
 ---
 

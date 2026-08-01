@@ -29,7 +29,7 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 * WPF
 * MVVM
 * CommunityToolkit.Mvvm
-* Entity Framework Core
+* ADO.NET
 * SQL Server
 * Dependency Injection
 * SSMS

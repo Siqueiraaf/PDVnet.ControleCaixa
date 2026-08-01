@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using PDVnet.ControleCaixa.UI.ViewModels;
+using System.Windows.Controls;
 
 namespace PDVnet.ControleCaixa.UI.Views.Movimentacao
 {
@@ -10,6 +11,24 @@ namespace PDVnet.ControleCaixa.UI.Views.Movimentacao
         public MovimentacaoList()
         {
             InitializeComponent();
+
+            Loaded += (_, _) =>
+            {
+                if (DataContext is MovimentacaoListViewModel vm)
+                {
+                    vm.ScrollTopoLista += ResetarScroll;
+                }
+            };
+        }
+
+        private void ResetarScroll()
+        {
+            if (ListaMovimentacoes.Items.Count > 0)
+            {
+                ListaMovimentacoes.ScrollIntoView(
+                    ListaMovimentacoes.Items[0]
+                );
+            }
         }
     }
 }

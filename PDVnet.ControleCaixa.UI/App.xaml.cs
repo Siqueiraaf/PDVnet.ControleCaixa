@@ -1,18 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using PDVnet.ControleCaixa.Business.Interfaces;
 using PDVnet.ControleCaixa.Business.Services;
-using PDVnet.ControleCaixa.Data.Repository;
 using PDVnet.ControleCaixa.Data.Interfaces;
+using PDVnet.ControleCaixa.Data.Repository;
+using PDVnet.ControleCaixa.UI.Components;
 using PDVnet.ControleCaixa.UI.Interfaces;
 using PDVnet.ControleCaixa.UI.Services;
 using PDVnet.ControleCaixa.UI.ViewModels;
 using PDVnet.ControleCaixa.UI.Views;
 using PDVnet.ControleCaixa.UI.Views.Movimentacao;
+using System.Globalization;
 using System.Windows;
-using PDVnet.ControleCaixa.Data.Context;
-using PDVnet.ControleCaixa.Data;
-using PDVnet.ControleCaixa.UI.Components;
 
 namespace PDVnet.ControleCaixa.UI;
 
@@ -22,6 +20,13 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        var cultura = new CultureInfo("pt-BR");
+
+        CultureInfo.DefaultThreadCurrentCulture = cultura;
+        CultureInfo.DefaultThreadCurrentUICulture = cultura;
+
+        base.OnStartup(e);
+
         var services = new ServiceCollection();
 
         ConfigureServices(services);
@@ -36,12 +41,6 @@ public partial class App : Application
 
     private static void ConfigureServices(IServiceCollection services)
     {
-
-        services.AddDbContext<PDVnetControleCaixaDbContext>(options =>
-        {
-            options.UseSqlServer(ConnectionHelper.ConnectionString);
-        });
-
         // Repository
         services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 

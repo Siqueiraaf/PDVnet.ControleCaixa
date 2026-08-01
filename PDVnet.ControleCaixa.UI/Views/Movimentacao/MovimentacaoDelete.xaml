@@ -5,157 +5,153 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Excluir Movimentação"
-        Height="460"
-        Width="430"
+        Height="480"
+        Width="500"
         WindowStartupLocation="CenterScreen">
 
-
-    <Grid Margin="15">
-
+    <Grid Margin="20">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel HorizontalAlignment="Center">
-
-
-            <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-
-
-                <TextBlock Text="🗑"
-                           FontSize="28"
-                           Margin="0,0,8,0"/>
-
-                <TextBlock Text="Excluir Movimentação"
-                           FontSize="25"
-                           FontWeight="Bold"/>
-
-            </StackPanel>
-
-            <TextBlock Text="Confirme os dados antes de continuar"
-                       Margin="0,8,0,0"
-                       HorizontalAlignment="Center"
-                       Foreground="Black"
-                       FontSize="14"/>
-        </StackPanel>
+        <TextBlock Text="🗑 Excluir Movimentação"
+                   FontSize="24"
+                   FontWeight="Bold"/>
 
         <Border Grid.Row="2"
-                Width="380"
-                Background="#F7F7F7"
-                CornerRadius="15"
                 BorderBrush="Gray"
                 BorderThickness="1"
-                Padding="20"
-                HorizontalAlignment="Center">
+                CornerRadius="10"
+                Padding="20">
 
-            <StackPanel>
-                <Border Background="#FFEBEE"
-                        CornerRadius="10"
-                        Padding="12"
-                        Margin="0,0,0,15">
+            <Grid>
 
-                    <TextBlock Text="⚠ Atenção! Esta ação não poderá ser desfeita."
-                               Foreground="#B71C1C"
-                               FontWeight="Bold"
-                               FontSize="13"
-                               TextWrapping="Wrap"/>
-                </Border>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel HorizontalAlignment="Center">
+                <StackPanel Grid.Row="0">
 
-
-                    <TextBlock Text="Descrição:"
+                    <TextBlock Text="Descrição"
                                FontWeight="Bold"
                                Margin="0,0,0,5"/>
 
-
-                    <Border Background="White"
-                            BorderBrush="Gray"
+                    <Border BorderBrush="Gray"
                             BorderThickness="1"
+                            Background="#F8F8F8"
                             Padding="10"
-                            Width="320"
-                            MinHeight="60">
+                            MinHeight="70">
 
                         <TextBlock Text="{Binding Descricao}"
-                                   TextWrapping="Wrap"
-                                   FontSize="13"/>
+                                   TextWrapping="Wrap"/>
 
                     </Border>
 
-                    <Grid Margin="0,15,0,0">
-                        <Grid.RowDefinitions>
-
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="Auto"/>
-
-                        </Grid.RowDefinitions>
-
-
-                        <Grid.ColumnDefinitions>
-
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="Auto"/>
-
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="0"
-                                   Text="Categoria:"
-                                   FontWeight="Bold"/>
-
-                        <TextBlock Grid.Row="0"
-                                   Grid.Column="1"
-                                   Text="{Binding Categoria}"
-                                   Margin="10,0,0,0"/>
-
-                        <TextBlock Grid.Row="2"
-                                   Text="Tipo:"
-                                   FontWeight="Bold"/>
-
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   Text="{Binding Tipo}"
-                                   Margin="10,0,0,0"/>
-
-                        <TextBlock Grid.Row="4"
-                                   Text="Valor:"
-                                   FontWeight="Bold"/>
-
-                        <TextBlock Grid.Row="4"
-                                   Grid.Column="1"
-                                   Text="{Binding Valor, StringFormat={}{0:C},ConverterCulture=pt-BR}"
-                                   Margin="10,0,0,0"
-                                   FontWeight="Bold"/>
-
-                    </Grid>
                 </StackPanel>
-            </StackPanel>
+
+                <Grid Grid.Row="2"
+      HorizontalAlignment="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Categoria:"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Text="{Binding Categoria}"
+                               Margin="15,0,0,0"/>
+
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Text="Tipo:"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               Text="{Binding Tipo}"
+                               Margin="15,0,0,0"/>
+
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               Text="Valor:"
+                               FontWeight="Bold"
+                               HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="1"
+                               Text="{Binding Valor,
+                                              StringFormat={}{0:C2},
+                                              ConverterCulture=pt-BR}"
+                               Margin="15,0,0,0"
+                               FontWeight="Bold"/>
+                </Grid>
+
+                <Border Grid.Row="4"
+                        Margin="0,0,0,5"
+                        Background="#FFF3CD"
+                        BorderBrush="#F0D36B"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="10">
+
+                    <TextBlock
+                        Text="⚠ Esta ação não poderá ser desfeita."
+                        FontWeight="Bold"
+                        Foreground="#8A6D3B"/>
+
+                </Border>
+
+            </Grid>
+
         </Border>
 
         <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Right">
 
-            <Button Content="❌ Cancelar"
-                    Width="110"
-                    Height="32"
-                    Margin="0,0,12,0"
+            <Button Width="110"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Content="❌ Cancelar"
                     Style="{StaticResource Button3D}"
                     Command="{Binding CancelarCommand}"/>
 
-            <Button Content="🗑 Excluir"
-                    Width="110"
-                    Height="32"
+            <Button Width="110"
+                    Height="35"
+                    Content="🗑 Excluir"
                     Style="{StaticResource Button3D}"
                     Command="{Binding ExcluirCommand}"/>
+
         </StackPanel>
+
     </Grid>
+
 </Window>

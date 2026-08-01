@@ -1,65 +1,120 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PDVnet.ControleCaixa.Data.Context;
-using PDVnet.ControleCaixa.Data.Helpers;
+﻿using PDVnet.ControleCaixa.Data.Helpers;
 using PDVnet.ControleCaixa.Data.Interfaces;
 using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.DTOs;
 using PDVnet.ControleCaixa.Model.Enums;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
 
 namespace PDVnet.ControleCaixa.Data.Repository;
 
 public class MovimentacaoRepository : IMovimentacaoRepository
 {
-    private readonly PDVnetControleCaixaDbContext _context;
+    private readonly string _connectionString;
 
-    public MovimentacaoRepository(PDVnetControleCaixaDbContext context)
+    public MovimentacaoRepository()
     {
-        _context = context;
+        _connectionString = ConfigurationManager.ConnectionStrings["PDVnetConnection"].ConnectionString;
     }
 
     public async Task<MovimentacaoCaixa> AdicionarMovimentacao(MovimentacaoCaixa movimentacao)
     {
-        _context.MovimentacoesCaixa.Add(movimentacao);
-        await _context.SaveChangesAsync();
+        using SqlConnection conexao = new(_connectionString);
+
+        const string sql = @"
+            INSERT INTO MovimentacaoCaixa
+            (Descricao,Categoria,Valor,Tipo,Status,DataMovimento)
+            VALUES
+            (@Descricao,@Categoria,@Valor,@Tipo,@Status,@DataMovimento)";
+
+        using SqlCommand comando = new(sql, conexao);
+
+        comando.Parameters.AddWithValue("@Descricao", movimentacao.Descricao);
+        comando.Parameters.AddWithValue("@Categoria", movimentacao.Categoria);
+        comando.Parameters.AddWithValue("@Valor", movimentacao.Valor);
+        comando.Parameters.AddWithValue("@Tipo", (int)movimentacao.Tipo);
+        comando.Parameters.AddWithValue("@Status", movimentacao.Status);
+        comando.Parameters.AddWithValue("@DataMovimento", movimentacao.DataMovimento);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
+
         return movimentacao;
     }
 
     public async Task<MovimentacaoCaixa> AtualizarMovimentacao(MovimentacaoCaixa movimentacao)
     {
-        var entidade = await _context.MovimentacoesCaixa
-            .FirstOrDefaultAsync(movimentacaoCaixa => movimentacaoCaixa.Id == movimentacao.Id);
+        var antesAlteracao = await BuscarMovimentacaoPorId(movimentacao.Id);
 
-        if (entidade == null)
+        if (antesAlteracao == null)
             throw new Exception("Movimentação não encontrada");
 
-        var antesAlteracao = new MovimentacaoCaixa
+        using SqlConnection conexao = new(_connectionString);
+
+        const string sql = @"
+        UPDATE MovimentacaoCaixa
+        SET
+            Descricao = @Descricao,
+            Categoria = @Categoria,
+            Valor = @Valor,
+            Tipo = @Tipo,
+            Status = @Status
+        WHERE Id = @Id";
+
+        using SqlCommand comando = new(sql, conexao);
+
+        comando.Parameters.AddWithValue("@Id", movimentacao.Id);
+        comando.Parameters.AddWithValue("@Descricao", movimentacao.Descricao);
+        comando.Parameters.AddWithValue("@Categoria", movimentacao.Categoria);
+        comando.Parameters.AddWithValue("@Valor", movimentacao.Valor);
+        comando.Parameters.AddWithValue("@Tipo", (int)movimentacao.Tipo);
+        comando.Parameters.AddWithValue("@Status", movimentacao.Status);
+
+        await conexao.OpenAsync();
+        await comando.ExecuteNonQueryAsync();
+
+        var depoisAlteracao = await BuscarMovimentacaoPorId(movimentacao.Id);
+
+        Log.Edicao(antesAlteracao, depoisAlteracao!);
+
+        return depoisAlteracao!;
+    }
+
+    private static MovimentacaoCaixa MapearMovimentacao(SqlDataReader reader)
+    {
+        return new MovimentacaoCaixa
         {
-            Id = entidade.Id,
-            Descricao = entidade.Descricao,
-            Categoria = entidade.Categoria,
-            Valor = entidade.Valor,
-            Tipo = entidade.Tipo,
-            Status = entidade.Status
+            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+            Descricao = reader.GetString(reader.GetOrdinal("Descricao")),
+            Categoria = reader.GetString(reader.GetOrdinal("Categoria")),
+            Valor = reader.GetDecimal(reader.GetOrdinal("Valor")),
+            Tipo = (TipoMovimentacao)reader.GetInt32(reader.GetOrdinal("Tipo")),
+            Status = reader.GetBoolean(reader.GetOrdinal("Status")),
+            DataMovimento = reader.GetDateTime(reader.GetOrdinal("DataMovimento"))
         };
-
-        entidade.Descricao = movimentacao.Descricao;
-        entidade.Categoria = movimentacao.Categoria;
-        entidade.Valor = movimentacao.Valor;
-        entidade.Tipo = movimentacao.Tipo;
-        entidade.Status = movimentacao.Status;
-
-        await _context.SaveChangesAsync();
-
-        var depoisAlteracao = entidade;
-
-        Log.Edicao(antesAlteracao, depoisAlteracao);
-
-        return entidade;
     }
 
     public async Task<IEnumerable<MovimentacaoCaixa>> ListarTodasMovimentacoes()
     {
-        return await _context.MovimentacoesCaixa.ToListAsync();
+        List<MovimentacaoCaixa> lista = [];
+
+        using SqlConnection conexao = new(_connectionString);
+
+        const string sql = @"
+            SELECT * FROM MovimentacaoCaixa";
+
+        using SqlCommand comando = new(sql, conexao);
+
+        await conexao.OpenAsync();
+
+        using SqlDataReader reader = await comando.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
+        {
+            lista.Add(MapearMovimentacao(reader));
+        }
+
+        return lista;
     }
 
     public async Task<bool> ExcluirMovimentacao(int id)
@@ -67,13 +122,27 @@ public class MovimentacaoRepository : IMovimentacaoRepository
         var movimentacao = await BuscarMovimentacaoPorId(id);
 
         if (movimentacao == null)
-        {
             return false;
-        }
+
+        using SqlConnection conexao = new(_connectionString);
+
+        const string sql = @"
+            UPDATE MovimentacaoCaixa
+            SET Status = 0
+            WHERE Id = @Id";
+
+        using SqlCommand comando = new(sql, conexao);
+
+        comando.Parameters.AddWithValue("@Id", id);
+
+        await conexao.OpenAsync();
+
+        int linhasAfetadas = await comando.ExecuteNonQueryAsync();
+
+        if (linhasAfetadas == 0)
+            return false;
 
         movimentacao.Status = false;
-
-        await _context.SaveChangesAsync();
 
         Log.Exclusao(movimentacao);
 
@@ -82,88 +151,173 @@ public class MovimentacaoRepository : IMovimentacaoRepository
 
     public async Task<MovimentacaoCaixa?> BuscarMovimentacaoPorId(int id)
     {
-        return await _context.MovimentacoesCaixa.FirstOrDefaultAsync(
-            movimentacaoCaixa => movimentacaoCaixa.Id == id);
+        using SqlConnection conexao = new(_connectionString);
+
+        const string sql = @"
+            SELECT * FROM MovimentacaoCaixa 
+            WHERE Id=@Id";
+
+        using SqlCommand comando = new(sql, conexao);
+
+        comando.Parameters.AddWithValue("@Id", id);
+
+        await conexao.OpenAsync();
+
+        using SqlDataReader reader = await comando.ExecuteReaderAsync();
+
+        if (!reader.Read())
+            return null;
+
+        return MapearMovimentacao(reader);
     }
 
-    private static IQueryable<MovimentacaoCaixa> AplicarFiltroPeriodo(IQueryable<MovimentacaoCaixa> query, string periodo)
+    private static string AplicarFiltroPeriodo(string sql, string periodo)
     {
-        var hoje = DateTime.Now;
-
         switch (periodo)
         {
             case "Hoje":
-                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento.Date == hoje.Date);
+                sql += " AND CAST(DataMovimento AS DATE) = CAST(GETDATE() AS DATE)";
                 break;
 
             case "Semanal":
-                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento >= hoje.AddDays(-7));
+                sql += " AND DataMovimento >= DATEADD(DAY, -7, GETDATE())";
                 break;
 
             case "Mensal":
-                query = query.Where(movimentacaoCaixa =>
-                    movimentacaoCaixa.DataMovimento.Month == hoje.Month &&
-                    movimentacaoCaixa.DataMovimento.Year == hoje.Year);
+                sql += " AND MONTH(DataMovimento) = MONTH(GETDATE()) AND YEAR(DataMovimento) = YEAR(GETDATE())";
                 break;
 
             case "Semestral":
-                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento >= hoje.AddMonths(-6));
+                sql += " AND DataMovimento >= DATEADD(MONTH, -6, GETDATE())";
                 break;
 
             case "Anual":
-                query = query.Where(movimentacaoCaixa => movimentacaoCaixa.DataMovimento.Year == hoje.Year);
+                sql += " AND YEAR(DataMovimento) = YEAR(GETDATE())";
                 break;
         }
 
-        return query;
+        return sql;
     }
 
     public async Task<IEnumerable<MovimentacaoCaixa>> FiltrarMovimentacoes(string? categoria, string? tipo, string? periodo)
     {
-        return await CriarConsulta(categoria, tipo, periodo)
-        .ToListAsync();
+        List<MovimentacaoCaixa> lista = [];
+
+        using SqlConnection conexao = new(_connectionString);
+
+        string sql = @"
+            SELECT *
+            FROM MovimentacaoCaixa
+            WHERE 1 = 1";
+
+        using SqlCommand comando = new();
+
+        comando.Connection = conexao;
+
+        if (!string.IsNullOrWhiteSpace(categoria) && categoria != "Todos")
+        {
+            sql += " AND Categoria = @Categoria";
+            comando.Parameters.AddWithValue("@Categoria", categoria);
+        }
+
+        if (!string.IsNullOrWhiteSpace(tipo) && tipo != "Todos")
+        {
+            sql += " AND Tipo = @Tipo";
+            comando.Parameters.AddWithValue("@Tipo", (int)Enum.Parse<TipoMovimentacao>(tipo));
+        }
+
+        if (!string.IsNullOrWhiteSpace(periodo) && periodo != "Todos")
+        {
+            switch (periodo)
+            {
+                case "Hoje":
+                    sql += " AND CAST(DataMovimento AS DATE) = CAST(GETDATE() AS DATE)";
+                    break;
+
+                case "Semanal":
+                    sql += " AND DataMovimento >= DATEADD(DAY,-7,GETDATE())";
+                    break;
+
+                case "Mensal":
+                    sql += " AND MONTH(DataMovimento)=MONTH(GETDATE()) AND YEAR(DataMovimento)=YEAR(GETDATE())";
+                    break;
+
+                case "Semestral":
+                    sql += " AND DataMovimento >= DATEADD(MONTH,-6,GETDATE())";
+                    break;
+
+                case "Anual":
+                    sql += " AND YEAR(DataMovimento)=YEAR(GETDATE())";
+                    break;
+            }
+        }
+
+        comando.CommandText = sql;
+
+        await conexao.OpenAsync();
+
+        using SqlDataReader reader = await comando.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
+        {
+            lista.Add(MapearMovimentacao(reader));
+        }
+
+        return lista;
     }
 
-    private IQueryable<MovimentacaoCaixa> CriarConsulta(string? categoria, string? tipo, string? periodo)
+    public async Task<PaginacaoDto<MovimentacaoCaixa>> ListarComPaginacao(int pagina, int tamanhoPagina, string? categoria, string? tipo, string? periodo)
     {
-        var query = _context.MovimentacoesCaixa.AsQueryable();
+        List<MovimentacaoCaixa> itens = [];
 
-        if (!string.IsNullOrEmpty(categoria) && categoria != "Todos")
+        using SqlConnection conexao = new(_connectionString);
+
+        string where = " WHERE 1 = 1 ";
+
+        using SqlCommand comando = new();
+        comando.Connection = conexao;
+
+        if (!string.IsNullOrWhiteSpace(categoria) && categoria != "Todos")
         {
-            query = query.Where(movimentacaoCaixa => movimentacaoCaixa.Categoria == categoria);
+            where += " AND Categoria = @Categoria";
+            comando.Parameters.AddWithValue("@Categoria", categoria);
         }
 
-        if (!string.IsNullOrEmpty(tipo) && tipo != "Todos")
+        if (!string.IsNullOrWhiteSpace(tipo) && tipo != "Todos")
         {
-            var tipoEnum = Enum.Parse<TipoMovimentacao>(tipo);
-
-            query = query.Where(movimentacaoCaixa => movimentacaoCaixa.Tipo == tipoEnum);
+            where += " AND Tipo = @Tipo";
+            comando.Parameters.AddWithValue("@Tipo", (int)Enum.Parse<TipoMovimentacao>(tipo));
         }
 
-        if (!string.IsNullOrEmpty(periodo) && periodo != "Todos")
+        if (!string.IsNullOrWhiteSpace(periodo) && periodo != "Todos")
         {
-            query = AplicarFiltroPeriodo(query, periodo);
+            where = AplicarFiltroPeriodo(where, periodo);
         }
 
-        return query;
-    }
+        await conexao.OpenAsync();
 
-    public async Task<PaginacaoDto<MovimentacaoCaixa>> ListarComPaginacao(
-        int pagina,
-        int tamanhoPagina,
-        string? categoria,
-        string? tipo,
-        string? periodo)
-    {
-        var query = CriarConsulta(categoria, tipo, periodo);
+        comando.CommandText = $"SELECT COUNT(*) FROM MovimentacaoCaixa {where}";
+        int total = (int)await comando.ExecuteScalarAsync();
 
-        var total = await query.CountAsync();
+        int offset = (pagina - 1) * tamanhoPagina;
 
-        var itens = await query
-            .OrderByDescending(x => x.Id)
-            .Skip((pagina - 1) * tamanhoPagina)
-            .Take(tamanhoPagina)
-            .ToListAsync();
+        comando.CommandText = $@"
+            SELECT *
+            FROM MovimentacaoCaixa
+        {where}
+            ORDER BY Id DESC
+            OFFSET @Offset ROWS
+            FETCH NEXT @TamanhoPagina ROWS ONLY";
+
+        comando.Parameters.AddWithValue("@Offset", offset);
+        comando.Parameters.AddWithValue("@TamanhoPagina", tamanhoPagina);
+
+        using SqlDataReader reader = await comando.ExecuteReaderAsync();
+
+        while (await reader.ReadAsync())
+        {
+            itens.Add(MapearMovimentacao(reader));
+        }
 
         return new PaginacaoDto<MovimentacaoCaixa>
         {

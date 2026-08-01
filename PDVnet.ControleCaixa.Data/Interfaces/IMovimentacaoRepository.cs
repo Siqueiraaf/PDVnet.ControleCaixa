@@ -1,6 +1,5 @@
 ﻿using PDVnet.ControleCaixa.Model;
 using PDVnet.ControleCaixa.Model.DTOs;
-using PDVnet.ControleCaixa.Model.Enums;
 
 namespace PDVnet.ControleCaixa.Data.Interfaces;
 

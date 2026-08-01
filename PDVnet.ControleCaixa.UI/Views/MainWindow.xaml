@@ -82,13 +82,13 @@
                 </Grid>
 
                 <TextBlock Grid.Row="1"
-                           Text="⚠ Atenção: Saldo do caixa abaixo do mínimo permitido (R$ 100,00)."
-                           Foreground="Red"
+                           Foreground="DarkOrange"
                            FontWeight="Bold"
                            HorizontalAlignment="Center"
+                           Text="{Binding Lista.MensagemSaldoBaixo}"
                            Visibility="{Binding Lista.SaldoBaixo,
                                 Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
+                
                 <Grid Grid.Row="2"
                       Margin="0,10,0,10"
                       HorizontalAlignment="Center">
@@ -170,31 +170,66 @@
 
                 <view:MovimentacaoList Grid.Row="4" DataContext="{Binding Lista}"/>
 
-                <StackPanel Grid.Row="6"
-                            Orientation="Horizontal">
+                <Grid Grid.Row="6" Margin="0,10,0,0">
 
-                    <Button Width="120"
-                            Height="35"
-                            Margin="0,0,10,0"
-                            Style="{StaticResource Button3D}"
-                            Content="➕ Cadastrar"
-                            Command="{Binding CadastrarCommand}"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                    <Button Width="120"
-                            Height="35"
-                            Margin="0,0,10,0"
-                            Style="{StaticResource Button3D}"
-                            Content="✍︎ Editar"
-                            Command="{Binding EditarCommand}"/>
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal">
 
-                    <Button Width="120"
-                            Height="35"
-                            Style="{StaticResource Button3D}"
-                            Content="🗑 Excluir"
-                            Command="{Binding ExcluirCommand}"/>
+                        <Button Width="120"
+                                Height="35"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource Button3D}"
+                                Content="➕ Cadastrar"
+                                Command="{Binding CadastrarCommand}"/>
 
-                </StackPanel>
+                        <Button Width="120"
+                                Height="35"
+                                Margin="0,0,10,0"
+                                Style="{StaticResource Button3D}"
+                                Content="✍︎ Editar"
+                                Command="{Binding EditarCommand}"/>
 
+                        <Button Width="120"
+                                Height="35"
+                                Style="{StaticResource Button3D}"
+                                Content="🗑 Excluir"
+                                Command="{Binding ExcluirCommand}"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+
+                        <TextBlock Text="🔔 Saldo Baixo:"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"/>
+
+                        <Slider Width="120"
+                                Minimum="0"
+                                Maximum="10000"
+                                TickFrequency="100"
+                                IsSnapToTickEnabled="True"
+                                SmallChange="100"
+                                LargeChange="500"
+                                Value="{Binding Lista.SaldoMinimo, Mode=TwoWay}" />
+
+                        <TextBlock Margin="8,0,0,0"
+                                   Width="70"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Language="pt-BR"
+                                   Text="{Binding Lista.SaldoMinimo,
+                                        StringFormat=R$ {0:N2}}"/>
+                    </StackPanel>
+
+                </Grid>
             </Grid>
         </Border>
     </Grid>

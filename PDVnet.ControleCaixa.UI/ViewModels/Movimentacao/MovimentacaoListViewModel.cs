@@ -12,6 +12,13 @@ public partial class MovimentacaoListViewModel : ObservableObject
 {
     private readonly IMovimentacaoService _service;
 
+    public MovimentacaoListViewModel(IMovimentacaoService service)
+    {
+        _service = service;
+
+        SaldoMinimo = Properties.Settings.Default.SaldoMinimo;
+    }
+
     private readonly ObservableCollection<MovimentacaoCaixa> _todasMovimentacoes = [];
 
     public ObservableCollection<MovimentacaoCaixa> Movimentacoes { get; } = [];
@@ -42,21 +49,20 @@ public partial class MovimentacaoListViewModel : ObservableObject
 
     [ObservableProperty]
     private bool saldoBaixo;
-    
+
+    [ObservableProperty]
+    private decimal saldoMinimo;
+
     public event Action? ScrollTopoLista;
 
-    public List<string> Categorias => MovimentacaoOptions.CategoriasFiltro;
+    public static List<string> Categorias => MovimentacaoOptions.CategoriasFiltro;
 
-    public List<string> PeriodosFiltro => MovimentacaoOptions.PeriodosFiltro;
+    public static List<string> PeriodosFiltro => MovimentacaoOptions.PeriodosFiltro;
 
-    public List<string> TiposFiltro => MovimentacaoOptions.TiposFiltro;
+    public static List<string> TiposFiltro => MovimentacaoOptions.TiposFiltro;
 
-    public MovimentacaoListViewModel(IMovimentacaoService service)
-    {
-        _service = service;
-    }
-
-    private const decimal SaldoMinimo = 100m;
+    public string MensagemSaldoBaixo =>
+    $"⚠ Atenção: Saldo do caixa abaixo do mínimo permitido (R$ {SaldoMinimo:N2}).";
 
     private void AtualizarIndicadores(IEnumerable<MovimentacaoCaixa> movimentacoes)
     {
@@ -154,4 +160,14 @@ public partial class MovimentacaoListViewModel : ObservableObject
 
         await CarregarMovimentacoesAsync();
     }
+
+    partial void OnSaldoMinimoChanged(decimal value)
+    {
+        Properties.Settings.Default.SaldoMinimo = value;
+        Properties.Settings.Default.Save();
+
+        OnPropertyChanged(nameof(MensagemSaldoBaixo));
+
+        SaldoBaixo = SaldoTotal < SaldoMinimo;
+    } 
 }

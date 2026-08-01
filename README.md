@@ -145,11 +145,6 @@ Estrutura:
 ```
 orde.P.ControleCaixa.Data
 │
-├── DatabaseConnection.cs
-│
-├── Context
-│   ├── PDVnetControleCaixaDbContext.cs
-│   └── PDVnetControleCaixaDbContextFactory.cs
 │
 ├── Interfaces
 │   └── IMovimentacaoRepository.cs
@@ -159,11 +154,6 @@ orde.P.ControleCaixa.Data
 │
 ├── Mappings
 │   └── MovimentacaoCaixaMap.cs
-│
-├── Migrations
-│   ├── PDVnetControleCaixa-v1.cs
-│   ├── PDVnetControleCaixa-v1.Designer.cs
-│   └── PDVnetControleCaixaDbContextModelSnapshot.cs
 │
 └── Repositories
     └── MovimentacaoRepository.cs

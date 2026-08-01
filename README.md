@@ -43,15 +43,15 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 O projeto foi desenvolvido seguindo uma arquitetura em camadas, separando responsabilidades para facilitar a manutenção, testes e evolução da aplicação.
 
 ```
-PDVnet.ControleCaixa
+orde.P.ControleCaixa
 │
-├── PDVnet.ControleCaixa.Model
+├── orde.P.ControleCaixa.Model
 │
-├── PDVnet.ControleCaixa.Business
+├── orde.P.ControleCaixa.Business
 │
-├── PDVnet.ControleCaixa.Data
+├── orde.P.ControleCaixa.Data
 │
-└── PDVnet.ControleCaixa.UI
+└── orde.P.ControleCaixa.UI
 ```
 
 ---
@@ -61,7 +61,7 @@ PDVnet.ControleCaixa
 ## Model
 
 ```
-PDVnet.ControleCaixa.Model
+orde.P.ControleCaixa.Model
 │
 ├── MovimentacaoCaixa.cs
 │
@@ -100,7 +100,7 @@ Responsabilidades:
 Estrutura:
 
 ```
-PDVnet.ControleCaixa.Business
+orde.P.ControleCaixa.Business
 │
 ├── Exceptions
 │   └── BusinessException.cs
@@ -144,7 +144,7 @@ Contém:
 Estrutura:
 
 ```
-PDVnet.ControleCaixa.Data
+orde.P.ControleCaixa.Data
 │
 ├── DatabaseConnection.cs
 │
@@ -189,7 +189,7 @@ Foi construída utilizando o padrão **MVVM**, separando completamente a interfa
 Estrutura:
 
 ```
-PDVnet.ControleCaixa.UI
+orde.P.ControleCaixa.UI
 │
 ├── Assets
 │   └── cx.ico
@@ -271,28 +271,13 @@ Mantendo a ViewModel desacoplada da View.
 
 ---
 
-# Banco de Dados
-
-O projeto utiliza **SQL Server** juntamente com o **Entity Framework Core**.
-
-A criação e atualização do banco são realizadas através das Migrations(conforme a documentação).
-
-Migration inicial:
-
-```
-PDVnetControleCaixa-v1
-```
-
----
-
 # Configuração
 
 ## 1. Clonar o projeto
 
 ```bash
-git clone https://github.com/Siqueiraaf/PDVnet.ControleCaixa
+git clone https://github.com/Siqueiraaf/Orde.P.ControleCaixa
 ```
-
 ---
 
 ## 2. Abrir no Visual Studio
@@ -300,7 +285,7 @@ git clone https://github.com/Siqueiraaf/PDVnet.ControleCaixa
 Abra a solução:
 
 ```
-PDVnet.ControleCaixa.sln
+Orde.P.ControleCaixa.sln
 ```
 
 ---
@@ -313,8 +298,8 @@ No arquivo de configuração, informe sua conexão com o SQL Server.
 
 *Caminho: PDVnet.ControleCaixa\PDVnet.ControleCaixa.UI\App.config*
 
-    PDVnet.ControleCaixa
-    └── PDVnet.ControleCaixa.UI
+    orde.P.ControleCaixa
+    └── orde.P.ControleCaixa.UI
     └── App.config
 
 Exemplo:
@@ -323,7 +308,7 @@ Exemplo:
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
 	<connectionStrings>
-		<add name="PDVnetConnection"
+		<add name="ordePConnection"
 			 connectionString="SUA_STRING_DE_CONEXAO_AQUI"
 			 providerName="Microsoft.Data.SqlClient" />
 	</connectionStrings>
@@ -331,68 +316,56 @@ Exemplo:
 ```
 Exemplo da connectionString utilizando SQL Server local:
 ```
-<add name="PDVnetConnection"
-	 connectionString="Server=.;Database=PDVnetControleCaixa;Trusted_Connection=True;TrustServerCertificate=True"
+<add name="ordePConnection"
+	 connectionString="Server=.;Database=ordePControleCaixa;Trusted_Connection=True;TrustServerCertificate=True"
 	 providerName="Microsoft.Data.SqlClient" />
 ```
 ---
 
 ## 4. Criar o banco de dados
 
-#### Executando as migrations pelo Visual Studio
+script de criação:
+´´´
+CREATE DATABASE OrdePControleCaixa;
+GO
 
-### No Visual Studio siga os passos:
+USE OrdePControleCaixa;
+GO
 
-1- Acesse o menu:
+CREATE TABLE MovimentacaoCaixa
+(
+    Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 
-    Ferramentas
-        ↓
-    Gerenciador de Pacotes NuGet
-        ↓
-    Console do Gerenciador de Pacotes
-    
-2- No Console do Gerenciador de Pacotes, localize a opção:
+    Descricao NVARCHAR(200) NOT NULL,
 
-    Projeto padrão
+    Tipo INT NOT NULL,
 
-3- Altere o projeto padrão para:
+    Categoria NVARCHAR(100) NULL,
 
-    PDVnet.ControleCaixa.Data
+    Valor DECIMAL(10,2) NOT NULL,
 
-A configuração deve ficar assim:
+    DataMovimento DATETIME2 NOT NULL,
 
-    Projeto padrão: PDVnet.ControleCaixa.Data
+    Status BIT NOT NULL DEFAULT 1
+);
+GO
 
-No terminal do **Package Manager Console** e execute:
+CREATE INDEX IX_MovimentacaoCaixa_DataMovimento
+ON MovimentacaoCaixa(DataMovimento);
+GO
 
-```powershell
-Update-Database
-```
+CREATE INDEX IX_MovimentacaoCaixa_Tipo
+ON MovimentacaoCaixa(Tipo);
+GO
 
-Caso seja necessário criar uma nova migration:
+CREATE INDEX IX_MovimentacaoCaixa_Status
+ON MovimentacaoCaixa(Status);
+GO
 
-```powershell
-Add-Migration PDVnetControleCaixa-v1 
-```
-A evolução da migration será apartir da adição da "-v" ex: v2, v3 e etc...
-
----
-
-## 5. Executar
-
-Pressione:
-
-```
-F5
-```
-
-ou
-
-```
-Ctrl + F5
-```
-
----
+CREATE INDEX IX_MovimentacaoCaixa_Categoria
+ON MovimentacaoCaixa(Categoria);
+GO
+´´´
 
 # Fluxo da Aplicação
 
@@ -472,7 +445,7 @@ dotnet test
 
 #### Pelo Visual Studio
 
-1. Clique com o botão direito no projeto **`PDVnet.ControleCaixa.Tests`**.
+1. Clique com o botão direito no projeto **`OrdeP.ControleCaixa.Tests`**.
 2. Selecione **Executar Testes** (*Run Tests*).
 
 Sinta-se à vontade para executar todos os cenários de teste disponíveis. Eles validam as principais regras de negócio da aplicação, garantindo o comportamento esperado para operações válidas e inválidas.
@@ -498,7 +471,7 @@ Exemplo:
     [26/07/2026 12:24:31] EXCLUSÃO: Id=34 | Descrição=Compra medicamento | Categoria=Fornecedores |  Tipo=Saida | Valor=R$ 2.000,00 | Status=True
     [26/07/2026 12:24:50] EDIÇÃO: Id=32 | Descrição: 'Rf' -> 'Receita Federal' | Categoria:     'Despesas Fixas' -> 'Impostos'
 
-**Caminho:** `PDVnet.ControleCaixa\PDVnet.ControleCaixa.UI\bin\Debug\net10.0-windows`
+**Caminho:** `Orde.P.ControleCaixa\Orde.P.ControleCaixa.UI\bin\Debug\net10.0-windows`
 
 **Nome do arquivo:** `logs.txt`
 

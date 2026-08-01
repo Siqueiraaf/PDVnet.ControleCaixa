@@ -43,15 +43,15 @@ Próximo ao final desta documentação haverá uma explicação de `configuraç�
 O projeto foi desenvolvido seguindo uma arquitetura em camadas, separando responsabilidades para facilitar a manutenção, testes e evolução da aplicação.
 
 ```
-orde.P.ControleCaixa
+orde.PControleCaixa
 │
-├── orde.P.ControleCaixa.Model
+├── orde.PControleCaixa.Model
 │
-├── orde.P.ControleCaixa.Business
+├── orde.PControleCaixa.Business
 │
-├── orde.P.ControleCaixa.Data
+├── orde.PControleCaixa.Data
 │
-└── orde.P.ControleCaixa.UI
+└── orde.PControleCaixa.UI
 ```
 
 ---
@@ -61,7 +61,7 @@ orde.P.ControleCaixa
 ## Model
 
 ```
-orde.P.ControleCaixa.Model
+orde.PControleCaixa.Model
 │
 ├── MovimentacaoCaixa.cs
 │
@@ -99,7 +99,7 @@ Responsabilidades:
 Estrutura:
 
 ```
-orde.P.ControleCaixa.Business
+orde.PControleCaixa.Business
 │
 ├── Exceptions
 │   └── BusinessException.cs
@@ -143,7 +143,7 @@ Contém:
 Estrutura:
 
 ```
-orde.P.ControleCaixa.Data
+orde.PControleCaixa.Data
 │
 │
 ├── Interfaces
@@ -178,7 +178,7 @@ Foi construída utilizando o padrão **MVVM**, separando completamente a interfa
 Estrutura:
 
 ```
-orde.P.ControleCaixa.UI
+orde.PControleCaixa.UI
 │
 ├── Assets
 │   └── cx.ico
@@ -265,7 +265,7 @@ Mantendo a ViewModel desacoplada da View.
 ## 1. Clonar o projeto
 
 ```bash
-git clone https://github.com/Siqueiraaf/Orde.P.ControleCaixa
+git clone https://github.com/Siqueiraaf/Orde.PControleCaixa
 ```
 ---
 
@@ -321,7 +321,7 @@ Após a execução, o banco estará pronto para utilização pela aplicação.
 
 A conexão com o banco deve ser configurada no arquivo:
 
-    Orde.P.ControleCaixa.UI/App.config
+    Orde.PControleCaixa.UI/App.config
 
 Exemplo:
 ```
@@ -469,7 +469,7 @@ Exemplo:
     [26/07/2026 12:24:31] EXCLUSÃO: Id=34 | Descrição=Compra medicamento | Categoria=Fornecedores |  Tipo=Saida | Valor=R$ 2.000,00 | Status=True
     [26/07/2026 12:24:50] EDIÇÃO: Id=32 | Descrição: 'Rf' -> 'Receita Federal' | Categoria:     'Despesas Fixas' -> 'Impostos'
 
-**Caminho:** `Orde.P.ControleCaixa\Orde.P.ControleCaixa.UI\bin\Debug\net10.0-windows`
+**Caminho:** `Orde.PControleCaixa\Orde.PControleCaixa.UI\bin\Debug\net10.0-windows`
 
 **Nome do arquivo:** `logs.txt`
 

@@ -84,7 +84,6 @@ Exemplos:
 
 A camada Model funciona como uma base compartilhada entre as demais camadas, mantendo os objetos principais da aplicação desacoplados das regras de negócio e da infraestrutura.
 
-
 ---
 
 ## Business
@@ -287,88 +286,97 @@ Abra a solução:
 ```
 Orde.P.ControleCaixa.sln
 ```
+Utilizando o Visual Studio.
+Após abrir o projeto, restaure as dependências:
+
+    dotnet restore
 
 ---
 
-## 3. Configurar a Connection String (`App.config`)
+## Configuração do Banco de Dados
 
-O projeto utiliza **SQL Server** para armazenamento dos dados. Antes de executar a aplicação, é necessário configurar a conexão com o banco de dados.
+O sistema utiliza SQL Server para armazenamento dos dados.
 
-No arquivo de configuração, informe sua conexão com o SQL Server.
+A estrutura do banco está disponível através do script:
 
-*Caminho: PDVnet.ControleCaixa\PDVnet.ControleCaixa.UI\App.config*
+    Database/OrdePControleCaixa.sql
 
-    orde.P.ControleCaixa
-    └── orde.P.ControleCaixa.UI
-    └── App.config
+O script é responsável por criar:
+
+- Banco de dados OrdePControleCaixa
+- Tabela MovimentacaoCaixa
+- Índices necessários para otimização das consultas
+
+Executando o Script SQL
+
+Abra o SQL Server Management Studio (SSMS).
+
+No menu:
+```
+File
+ └── Open
+      └── File
+```
+Selecione o arquivo:
+
+    Database/OrdePControleCaixa.sql
+
+Execute o script utilizando:
+
+    F5
+
+Após a execução, o banco estará pronto para utilização pela aplicação.
+
+## Configuração da Connection String
+
+A conexão com o banco deve ser configurada no arquivo:
+
+    Orde.P.ControleCaixa.UI/App.config
 
 Exemplo:
+```
+<connectionStrings>
+    <add name="ordePConnection"
+         connectionString="Server=.;Database=OrdePControleCaixa;Trusted_Connection=True;TrustServerCertificate=True"
+         providerName="Microsoft.Data.SqlClient" />
+</connectionStrings>
+```
+Altere:
+```
+Server=.
+```
+Pelo servidor SQL Server utilizado no ambiente.
 
-```
-<?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-	<connectionStrings>
-		<add name="ordePConnection"
-			 connectionString="SUA_STRING_DE_CONEXAO_AQUI"
-			 providerName="Microsoft.Data.SqlClient" />
-	</connectionStrings>
-</configuration>
-```
-Exemplo da connectionString utilizando SQL Server local:
+Exemplo utilizando uma instância específica:
+
 ```
 <add name="ordePConnection"
-	 connectionString="Server=.;Database=ordePControleCaixa;Trusted_Connection=True;TrustServerCertificate=True"
-	 providerName="Microsoft.Data.SqlClient" />
+     connectionString="Server=SERVIDOR_SQL;Database=OrdePControleCaixa;Trusted_Connection=True;TrustServerCertificate=True"
+     providerName="Microsoft.Data.SqlClient" />
 ```
----
+## Estrutura do Banco de Dados
+Tabela Principal
 
-## 4. Criar o banco de dados
+    MovimentacaoCaixa
 
-script de criação:
-´´´
-	CREATE DATABASE OrdePControleCaixa;
-	GO
-	
-	USE OrdePControleCaixa;
-	GO
-	
-	CREATE TABLE MovimentacaoCaixa
-	(
-	    Id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	
-	    Descricao NVARCHAR(200) NOT NULL,
-	
-	    Tipo INT NOT NULL,
-	
-	    Categoria NVARCHAR(100) NULL,
-	
-	    Valor DECIMAL(10,2) NOT NULL,
-	
-	    DataMovimento DATETIME2 NOT NULL,
-	
-	    Status BIT NOT NULL DEFAULT 1
-	);
-	GO
-	
-	CREATE INDEX IX_MovimentacaoCaixa_DataMovimento
-	ON MovimentacaoCaixa(DataMovimento);
-	GO
-	
-	CREATE INDEX IX_MovimentacaoCaixa_Tipo
-	ON MovimentacaoCaixa(Tipo);
-	GO
-	
-	CREATE INDEX IX_MovimentacaoCaixa_Status
-	ON MovimentacaoCaixa(Status);
-	GO
-	
-	CREATE INDEX IX_MovimentacaoCaixa_Categoria
-	ON MovimentacaoCaixa(Categoria);
-GO
-´´´
+Estrutura:
+| Campo         | Tipo          |
+| ------------- | ------------- |
+| Id            | INT           |
+| Descricao     | NVARCHAR(200) |
+| Tipo          | INT           |
+| Categoria     | NVARCHAR(100) |
+| Valor         | DECIMAL(10,2) |
+| DataMovimento | DATETIME2     |
+| Status        | BIT           |
+
+## Acesso aos Dados
+
+A aplicação utiliza acesso ao banco através de:
+
+    Microsoft.Data.SqlClient
 
 # Fluxo da Aplicação
-
 ```
 Usuário
     ↓

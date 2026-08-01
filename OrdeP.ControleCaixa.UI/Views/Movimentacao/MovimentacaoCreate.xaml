@@ -1,0 +1,46 @@
+﻿<Window x:Class="OrdeP.ControleCaixa.UI.Views.Movimentacao.MovimentacaoCreate"
+        xmlns:components="clr-namespace:OrdeP.ControleCaixa.UI.Components"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrdeP.ControleCaixa.UI.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Adicionar Movimentação" Height="450" Width="500">
+    
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="📝 Adicionar Movimentação"
+               FontSize="24"
+               FontWeight="Bold"/>
+
+        <components:MovimentacaoForm Grid.Row="2"/>
+
+        <StackPanel Grid.Row="4"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+
+            <Button Width="110"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Content="❌ Cancelar"
+                    Style="{StaticResource Button3D}"
+                    Command="{Binding CancelarMovimentacaoCommand}"/>
+
+            <Button Width="110"
+                    Height="35"
+                    Content="✔️ Adicionar"
+                    Style="{StaticResource Button3D}"
+                    Command="{Binding CadastrarMovimentacaoCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

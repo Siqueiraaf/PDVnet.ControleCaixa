@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="OrdeP.ControleCaixa.Business/OrdeP.ControleCaixa.Business.csproj" />
+  <Project Path="OrdeP.ControleCaixa.Data/OrdeP.ControleCaixa.Data.csproj" />
+  <Project Path="OrdeP.ControleCaixa.Model/OrdeP.ControleCaixa.Model.csproj" />
+  <Project Path="OrdeP.ControleCaixa.Tests/OrdeP.ControleCaixa.Tests.csproj" />
+  <Project Path="OrdeP.ControleCaixa.UI/OrdeP.ControleCaixa.UI.csproj" />
+</Solution>

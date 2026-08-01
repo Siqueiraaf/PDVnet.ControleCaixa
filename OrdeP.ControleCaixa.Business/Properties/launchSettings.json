@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OrdeP.ControleCaixa.Business": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Developer\\OrdeP.ControleCaixa\\OrdeP.ControleCaixa.UI"
+    }
+  }
+}

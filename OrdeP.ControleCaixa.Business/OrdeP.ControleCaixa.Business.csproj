@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrdeP.ControleCaixa.Data\OrdeP.ControleCaixa.Data.csproj" />
+    <ProjectReference Include="..\OrdeP.ControleCaixa.Model\OrdeP.ControleCaixa.Model.csproj" />
+  </ItemGroup>
+
+</Project>
